@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Campus Issue Resolution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --primary-light: #4895ef;
+            --secondary: #7209b7;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --danger: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 16px;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-700);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            box-shadow: var(--shadow-md);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition);
+            margin-bottom: 24px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--gray-50);
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.15s ease;
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-800);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gray-300);
+            color: var(--gray-700);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .message {
+            padding: 16px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .error-message {
+            background: rgba(230, 57, 70, 0.1);
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+
+        .success-message {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .align-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-2 {
+            gap: 8px;
+        }
+
+        .gap-3 {
+            gap: 12px;
+        }
+
+        .mt-4 {
+            margin-top: 24px;
+        }
+
+        .profile-section {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        .profile-avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 600;
+            color: white;
+            box-shadow: var(--shadow-lg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .profile-avatar-container:hover .avatar-overlay {
+            opacity: 1;
+        }
+
+        .avatar-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: 1px solid var(--gray-200);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .back-btn {
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-progress {
+            width: 100%;
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .user-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .avatar-actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-tools"></i>
+                    <h1>Campus Issue Resolution System</h1>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="header-avatar">U</div>
+                    <span id="header-username">User</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="profile-section">
+            <a href="user.html" class="btn btn-secondary back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+
+            <div class="card">
+                <div class="card-header text-center">
+                    <div class="profile-avatar-container">
+                        <div class="profile-avatar" id="profile-avatar">U</div>
+                        <div class="avatar-overlay" onclick="document.getElementById('avatar-input').click()">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <h2>User Profile</h2>
+                    <p>Manage your account information</p>
+
+                    <div class="avatar-actions">
+                        <input type="file" id="avatar-input" class="file-input" accept="image/*"
+                            onchange="handleImageUpload(event)">
+                        <button type="button" class="btn btn-outline"
+                            onclick="document.getElementById('avatar-input').click()">
+                            <i class="fas fa-upload"></i> Change Photo
+                        </button>
+                        <div id="upload-progress" class="upload-progress hidden">
+                            <div class="progress-bar" id="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="user-stats">
+                        <div class="stat-card">
+                            <span class="stat-number" id="issues-count">0</span>
+                            <span class="stat-label">Issues Reported</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="votes-count">0</span>
+                            <span class="stat-label">Votes Cast</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="comments-count">0</span>
+                            <span class="stat-label">Comments</span>
+                        </div>
+                    </div>
+
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <input type="text" id="role" class="form-control" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="member-since">Member Since</label>
+                            <input type="text" id="member-since" class="form-control" disabled>
+                        </div>
+
+                        <div id="profile-error" class="error-message hidden"></div>
+                        <div id="profile-success" class="success-message hidden"></div>
+
+                        <div class="d-flex gap-2" style="flex-wrap: wrap;">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Profile
+                            </button>
+                            <a href="settings.html" class="btn btn-secondary">
+                                <i class="fas fa-cog"></i> Account Settings
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        //     const API_BASE = 'https://campusfixbackend.onrender.com/api';
+
+        //     let currentUser = null;
+        //     let authToken = localStorage.getItem('authToken');
+
+        //     // Check authentication
+        //     if (!authToken) {
+        //         window.location.href = 'user.html';
+        //     }
+
+        //     // Load user profile
+        // // In loadUserProfile function, replace the profile picture part:
+        // async function loadUserProfile() {
+        //     try {
+        //         console.log('Loading user profile...');
+        //         const response = await fetch(`${API_BASE}/users/me`, {
+        //             headers: {
+        //                 'Authorization': `Bearer ${authToken}`
+        //             }
+        //         });
+
+        //         if (response.ok) {
+        //             const userData = await response.json();
+        //             currentUser = userData;
+        //             console.log('User data loaded:', userData);
+        //             displayUserData(userData);
+        //             loadUserStats();
+
+        //             // Load profile picture (will handle 404 gracefully)
+        //             await loadProfilePictureFromServer();
+        //         } else if (response.status === 401) {
+        //             console.log('Authentication failed, redirecting to login');
+        //             logout();
+        //         } else {
+        //             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        //         }
+        //     } catch (error) {
+        //         console.error('Error loading profile:', error);
+        //         showError('Failed to load profile data: ' + error.message);
+        //     }
+        // }
+
+        // // New function to load profile picture from dedicated endpoint
+        // async function loadProfilePictureFromServer() {
+        //     try {
+        //         console.log('🔄 Loading profile picture...');
+        //         const response = await fetch(`${API_BASE}/users/profile/picture`, {
+        //             headers: {
+        //                 'Authorization': `Bearer ${authToken}`
+        //             }
+        //         });
+
+        //         console.log('📊 Profile picture response status:', response.status);
+
+        //         if (response.ok) {
+        //             const pictureData = await response.json();
+        //             console.log('✅ Profile picture loaded:', pictureData);
+        //             loadProfilePicture(pictureData.profilePictureUrl);
+        //         } else if (response.status === 404) {
+        //             // ✅ THIS IS NORMAL - user doesn't have a profile picture yet
+        //             console.log('ℹ️ No profile picture set (this is normal for new users)');
+        //             showDefaultAvatar();
+        //         } else {
+        //             console.warn('⚠️ Unexpected error loading profile picture:', response.status);
+        //             showDefaultAvatar();
+        //         }
+        //     } catch (error) {
+        //         console.error('❌ Network error loading profile picture:', error);
+        //         showDefaultAvatar();
+        //     }
+        // }
+
+        // function showDefaultAvatar() {
+        //     const profileAvatar = document.getElementById('profile-avatar');
+        //     const headerAvatar = document.getElementById('header-avatar');
+
+        //     if (currentUser) {
+        //         const initial = currentUser.username.charAt(0).toUpperCase();
+        //         profileAvatar.textContent = initial;
+        //         profileAvatar.style.backgroundImage = '';
+        //         headerAvatar.textContent = initial;
+        //         headerAvatar.style.backgroundImage = '';
+        //     }
+        // }
+        //     // Display user data in form
+        //     function displayUserData(user) {
+        //         document.getElementById('username').value = user.username;
+        //         document.getElementById('email').value = user.email;
+        //         document.getElementById('role').value = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+
+        //         if (user.createdAt) {
+        //             const memberSince = new Date(user.createdAt).toLocaleDateString('en-US', {
+        //                 year: 'numeric',
+        //                 month: 'long',
+        //                 day: 'numeric'
+        //             });
+        //             document.getElementById('member-since').value = memberSince;
+        //         }
+
+        //         const avatar = user.username.charAt(0).toUpperCase();
+        //         document.getElementById('profile-avatar').textContent = avatar;
+        //         document.getElementById('header-avatar').textContent = avatar;
+        //         document.getElementById('header-username').textContent = user.username;
+        //     }
+
+        //     // Load profile picture
+        //     function loadProfilePicture(imageUrl) {
+        //         const profileAvatar = document.getElementById('profile-avatar');
+        //         const headerAvatar = document.getElementById('header-avatar');
+
+        //         // Reset avatars
+        //         profileAvatar.style.backgroundImage = '';
+        //         headerAvatar.style.backgroundImage = '';
+
+        //         const avatarInitial = currentUser.username.charAt(0).toUpperCase();
+        //         profileAvatar.textContent = avatarInitial;
+        //         headerAvatar.textContent = avatarInitial;
+
+        //         if (imageUrl) {
+        //             // Ensure URL is properly formatted
+        //             let finalUrl = imageUrl;
+        //             if (!imageUrl.startsWith('http')) {
+        //                 // If it's just a filename, construct full URL
+        //                 finalUrl = `https://campusfixstorage.blob.core.windows.net/campusfix/${imageUrl}`;
+        //             }
+
+        //             // Add cache busting
+        //             finalUrl += (finalUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
+
+        //             console.log('Setting profile picture URL:', finalUrl);
+
+        //             profileAvatar.style.backgroundImage = `url("${finalUrl}")`;
+        //             profileAvatar.textContent = '';
+        //             headerAvatar.style.backgroundImage = `url("${finalUrl}")`;
+        //             headerAvatar.textContent = '';
+        //         }
+        //     }
+
+        //     // Handle image upload - DEBUGGED VERSION
+        // // Handle image upload - FIXED VERSION
+        // async function handleImageUpload(event) {
+        //     const file = event.target.files[0];
+        //     if (!file) {
+        //         console.log('No file selected');
+        //         return;
+        //     }
+
+        //     console.log('File selected:', {
+        //         name: file.name,
+        //         type: file.type,
+        //         size: file.size
+        //     });
+
+        //     // Validate file type
+        //     if (!file.type.startsWith('image/')) {
+        //         showError('Please select a valid image file (JPEG, PNG, GIF, etc.)');
+        //         return;
+        //     }
+
+        //     // Validate file size (max 5MB)
+        //     if (file.size > 5 * 1024 * 1024) {
+        //         showError('Image size should be less than 5MB');
+        //         return;
+        //     }
+
+        //     // Show preview
+        //     showImagePreview(file);
+
+        //     try {
+        //         console.log('Starting upload process...');
+        //         showUploadProgress(10);
+
+        //         const formData = new FormData();
+        //         formData.append('profilePicture', file);
+
+        //         console.log('Sending request to:', `${API_BASE}/users/profile/picture`);
+
+        //         const response = await fetch(`${API_BASE}/users/profile/picture`, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Authorization': `Bearer ${authToken}`
+        //             },
+        //             body: formData
+        //         });
+
+        //         console.log('Response status:', response.status);
+        //         console.log('Response ok:', response.ok);
+
+        //         showUploadProgress(60);
+
+        //         // Get response text first to handle both JSON and text responses
+        //         const responseText = await response.text();
+        //         console.log('Raw response:', responseText);
+
+        //         let result;
+        //         try {
+        //             result = JSON.parse(responseText);
+        //         } catch (parseError) {
+        //             console.error('Failed to parse JSON response:', responseText);
+        //             throw new Error('Invalid server response format');
+        //         }
+
+        //         if (!response.ok) {
+        //             console.error('Server error response:', result);
+        //             const errorMessage = result.error || result.details || `Upload failed with status ${response.status}`;
+        //             throw new Error(errorMessage);
+        //         }
+
+        //         console.log('Upload successful:', result);
+        //         showUploadProgress(100);
+
+        //         // Update the profile picture display using the URL from server
+        //         if (result.profilePictureUrl) {
+        //             console.log('New profile picture URL from server:', result.profilePictureUrl);
+        //             loadProfilePicture(result.profilePictureUrl);
+        //         } else if (result.profilePicture) {
+        //             // If server only returns filename, let the server handle URL construction
+        //             console.log('Profile picture filename from server:', result.profilePicture);
+        //             // Reload the profile to get the full URL
+        //             await loadUserProfile();
+        //         }
+
+        //         showSuccess('Profile picture updated successfully!');
+
+        //     } catch (error) {
+        //         console.error('Error uploading image:', error);
+
+        //         let userMessage = 'Failed to upload profile picture';
+
+        //         if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        //             userMessage = 'Network error. Please check your internet connection.';
+        //         } else if (error.message.includes('401') || error.message.includes('token')) {
+        //             userMessage = 'Session expired. Please log in again.';
+        //             setTimeout(logout, 2000);
+        //         } else if (error.message.includes('413')) {
+        //             userMessage = 'File too large. Please select a smaller image (max 5MB).';
+        //         } else if (error.message.includes('image') || error.message.includes('type')) {
+        //             userMessage = 'Invalid file type. Please use JPEG, PNG, or GIF.';
+        //         } else if (error.message.includes('Storage service unavailable')) {
+        //             userMessage = 'Storage service temporarily unavailable. Please try again in a few moments.';
+        //         } else {
+        //             userMessage = error.message || userMessage;
+        //         }
+
+        //         showError(userMessage);
+        //     } finally {
+        //         setTimeout(() => {
+        //             hideUploadProgress();
+        //         }, 1000);
+        //         event.target.value = '';
+        //     }
+        // }
+
+        // // Show image preview before upload
+        // function showImagePreview(file) {
+        //     const reader = new FileReader();
+        //     reader.onload = function(e) {
+        //         const profileAvatar = document.getElementById('profile-avatar');
+        //         profileAvatar.style.backgroundImage = `url("${e.target.result}")`;
+        //         profileAvatar.textContent = '';
+        //     };
+        //     reader.readAsDataURL(file);
+        // }
+
+        // // Improved loadProfilePicture function
+        // function loadProfilePicture(imageUrl) {
+        //     const profileAvatar = document.getElementById('profile-avatar');
+        //     const headerAvatar = document.getElementById('header-avatar');
+
+        //     // Reset to initial first
+        //     const avatarInitial = currentUser ? currentUser.username.charAt(0).toUpperCase() : 'U';
+        //     profileAvatar.textContent = avatarInitial;
+        //     profileAvatar.style.backgroundImage = '';
+        //     headerAvatar.textContent = avatarInitial;
+        //     headerAvatar.style.backgroundImage = '';
+
+        //     if (imageUrl) {
+        //         console.log('Loading profile picture from:', imageUrl);
+
+        //         // Create new Image to handle loading errors
+        //         const img = new Image();
+        //         img.onload = function() {
+        //             console.log('Profile picture loaded successfully');
+        //             profileAvatar.style.backgroundImage = `url("${imageUrl}")`;
+        //             profileAvatar.textContent = '';
+        //             headerAvatar.style.backgroundImage = `url("${imageUrl}")`;
+        //             headerAvatar.textContent = '';
+        //         };
+        //         img.onerror = function() {
+        //             console.error('Failed to load profile picture from:', imageUrl);
+        //             // Keep the initial if image fails to load
+        //             profileAvatar.textContent = avatarInitial;
+        //             headerAvatar.textContent = avatarInitial;
+        //         };
+        //         img.src = imageUrl + (imageUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
+        //     }
+        // }
+
+        //     // Show upload progress
+        //     function showUploadProgress(percent) {
+        //         const progressContainer = document.getElementById('upload-progress');
+        //         const progressBar = document.getElementById('progress-bar');
+
+        //         progressContainer.classList.remove('hidden');
+        //         progressBar.style.width = `${percent}%`;
+        //     }
+
+        //     // Hide upload progress
+        //     function hideUploadProgress() {
+        //         const progressContainer = document.getElementById('upload-progress');
+        //         progressContainer.classList.add('hidden');
+
+        //         const progressBar = document.getElementById('progress-bar');
+        //         progressBar.style.width = '0%';
+        //     }
+
+        //     // Load user statistics
+        //     async function loadUserStats() {
+        //         try {
+        //             const issuesResponse = await fetch(`${API_BASE}/issues`, {
+        //                 headers: {
+        //                     'Authorization': `Bearer ${authToken}`
+        //                 }
+        //             });
+
+        //             if (issuesResponse.ok) {
+        //                 const issues = await issuesResponse.json();
+        //                 document.getElementById('issues-count').textContent = issues.length || 0;
+        //             } else {
+        //                 document.getElementById('issues-count').textContent = '0';
+        //             }
+
+        //             // Placeholder for other stats
+        //             document.getElementById('votes-count').textContent = '0';
+        //             document.getElementById('comments-count').textContent = '0';
+
+        //         } catch (error) {
+        //             console.error('Error loading stats:', error);
+        //             document.getElementById('issues-count').textContent = '0';
+        //             document.getElementById('votes-count').textContent = '0';
+        //             document.getElementById('comments-count').textContent = '0';
+        //         }
+        //     }
+
+        //     // Update profile form handler
+        //     document.getElementById('profile-form').addEventListener('submit', async (e) => {
+        //         e.preventDefault();
+
+        //         const username = document.getElementById('username').value.trim();
+        //         const email = document.getElementById('email').value.trim();
+
+        //         if (!username || !email) {
+        //             showError('Please fill in all required fields');
+        //             return;
+        //         }
+
+        //         if (!validateEmail(email)) {
+        //             showError('Please enter a valid email address');
+        //             return;
+        //         }
+
+        //         try {
+        //             const response = await fetch(`${API_BASE}/users/profile`, {
+        //                 method: 'PUT',
+        //                 headers: {
+        //                     'Content-Type': 'application/json',
+        //                     'Authorization': `Bearer ${authToken}`
+        //                 },
+        //                 body: JSON.stringify({ username, email })
+        //             });
+
+        //             const data = await response.json();
+
+        //             if (response.ok) {
+        //                 showSuccess('Profile updated successfully!');
+        //                 // Update header
+        //                 const newInitial = username.charAt(0).toUpperCase();
+        //                 document.getElementById('header-avatar').textContent = newInitial;
+        //                 document.getElementById('header-username').textContent = username;
+
+        //                 if (currentUser) {
+        //                     currentUser.username = username;
+        //                     currentUser.email = email;
+        //                 }
+        //             } else {
+        //                 showError(data.error || 'Failed to update profile');
+        //             }
+        //         } catch (error) {
+        //             console.error('Error updating profile:', error);
+        //             showError('Failed to update profile: ' + error.message);
+        //         }
+        //     });
+
+        //     // Email validation
+        //     function validateEmail(email) {
+        //         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        //         return emailRegex.test(email);
+        //     }
+
+        //     // Utility functions
+        //     function showError(message) {
+        //         const errorDiv = document.getElementById('profile-error');
+        //         errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+        //         errorDiv.classList.remove('hidden');
+        //         document.getElementById('profile-success').classList.add('hidden');
+        //         setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+        //     }
+
+        //     function showSuccess(message) {
+        //         const successDiv = document.getElementById('profile-success');
+        //         successDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+        //         successDiv.classList.remove('hidden');
+        //         document.getElementById('profile-error').classList.add('hidden');
+        //         setTimeout(() => successDiv.classList.add('hidden'), 5000);
+        //     }
+
+        //     function logout() {
+        //         localStorage.removeItem('authToken');
+        //         localStorage.removeItem('user');
+        //         window.location.href = 'user.html';
+        //     }
+
+        //     // Initialize when page loads
+        //     document.addEventListener('DOMContentLoaded', function() {
+        //         console.log('Profile page initialized');
+        //         loadUserProfile();
+
+        //         // Add click handler for avatar overlay
+        //         document.querySelector('.avatar-overlay').addEventListener('click', function() {
+        //             document.getElementById('avatar-input').click();
+        //         });
+        //     });
+        const API_BASE = 'https://campusfixbackend.onrender.com/api';
+
+        let currentUser = null;
+        let authToken = localStorage.getItem('authToken');
+
+        // Check authentication
+        if (!authToken) {
+            window.location.href = 'user.html';
+        }
+
+        // Load user profile
+        async function loadUserProfile() {
+            try {
+                console.log('Loading user profile...');
+                const response = await fetch(`${API_BASE}/users/me`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    currentUser = userData;
+                    console.log('User data loaded:', userData);
+                    displayUserData(userData);
+                    loadUserStats();
+
+                    // Load profile picture from user data first
+                    await loadProfilePictureFromUserData(userData);
+                } else if (response.status === 401) {
+                    console.log('Authentication failed, redirecting to login');
+                    logout();
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                showError('Failed to load profile data: ' + error.message);
+            }
+        }
+
+        // Try to load profile picture from user data first
+        async function loadProfilePictureFromUserData(userData) {
+            console.log('🔍 Checking user data for profile picture...');
+
+            // Check various possible locations for profile picture data
+            const possiblePictureFields = [
+                userData.profilePicture,
+                userData.profilePictureUrl,
+                userData.avatar,
+                userData.profileImage
+            ];
+
+            for (const field of possiblePictureFields) {
+                if (field) {
+                    console.log('✅ Found profile picture in user data:', field);
+                    loadProfilePicture(field);
+                    return;
+                }
+            }
+
+            // If no picture in user data, try the dedicated endpoint
+            console.log('ℹ️ No profile picture found in user data, trying dedicated endpoint...');
+            await loadProfilePictureFromServer();
+        }
+
+        // Load profile picture from dedicated endpoint
+        async function loadProfilePictureFromServer() {
+            try {
+                console.log('🔄 Loading profile picture from server endpoint...');
+                const response = await fetch(`${API_BASE}/users/profile/picture`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                console.log('📊 Profile picture response status:', response.status);
+
+                if (response.ok) {
+                    const contentType = response.headers.get('content-type');
+
+                    if (contentType && contentType.includes('application/json')) {
+                        const pictureData = await response.json();
+                        console.log('✅ Profile picture data loaded:', pictureData);
+
+                        // Handle different response formats
+                        const imageUrl = pictureData.profilePictureUrl ||
+                            pictureData.url ||
+                            pictureData.profilePicture ||
+                            pictureData.imageUrl;
+
+                        if (imageUrl) {
+                            loadProfilePicture(imageUrl);
+                        } else {
+                            console.log('ℹ️ No profile picture URL in response');
+                            showDefaultAvatar();
+                        }
+                    } else {
+                        // Handle case where endpoint might return the image directly
+                        console.log('⚠️ Unexpected content type:', contentType);
+                        showDefaultAvatar();
+                    }
+                } else if (response.status === 404) {
+                    console.log('ℹ️ No profile picture set (404)');
+                    showDefaultAvatar();
+                } else {
+                    console.warn('⚠️ Unexpected error loading profile picture:', response.status);
+                    showDefaultAvatar();
+                }
+            } catch (error) {
+                console.error('❌ Network error loading profile picture:', error);
+                showDefaultAvatar();
+            }
+        }
+
+        function showDefaultAvatar() {
+            console.log('👤 Setting default avatar');
+            const profileAvatar = document.getElementById('profile-avatar');
+            const headerAvatar = document.getElementById('header-avatar');
+
+            if (currentUser) {
+                const initial = currentUser.username.charAt(0).toUpperCase();
+                profileAvatar.textContent = initial;
+                profileAvatar.style.backgroundImage = '';
+                headerAvatar.textContent = initial;
+                headerAvatar.style.backgroundImage = '';
+            }
+        }
+
+        // Display user data in form
+        function displayUserData(user) {
+            document.getElementById('username').value = user.username;
+            document.getElementById('email').value = user.email;
+            document.getElementById('role').value = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+
+            if (user.createdAt) {
+                const memberSince = new Date(user.createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                document.getElementById('member-since').value = memberSince;
+            }
+
+            const avatar = user.username.charAt(0).toUpperCase();
+            document.getElementById('profile-avatar').textContent = avatar;
+            document.getElementById('header-avatar').textContent = avatar;
+            document.getElementById('header-username').textContent = user.username;
+        }
+
+        // Improved loadProfilePicture function with better error handling
+        function loadProfilePicture(imageUrl) {
+            const profileAvatar = document.getElementById('profile-avatar');
+            const headerAvatar = document.getElementById('header-avatar');
+
+            if (!imageUrl) {
+                console.log('❌ No image URL provided');
+                showDefaultAvatar();
+                return;
+            }
+
+            // Reset to initial first
+            const avatarInitial = currentUser ? currentUser.username.charAt(0).toUpperCase() : 'U';
+            profileAvatar.textContent = avatarInitial;
+            profileAvatar.style.backgroundImage = '';
+            headerAvatar.textContent = avatarInitial;
+            headerAvatar.style.backgroundImage = '';
+
+            console.log('🖼️ Attempting to load profile picture:', imageUrl);
+
+            // Ensure URL is properly formatted
+            let finalUrl = imageUrl;
+            if (!imageUrl.startsWith('http')) {
+                // If it's just a filename, construct full URL
+                finalUrl = `https://campusfixstorage.blob.core.windows.net/campusfix/${imageUrl}`;
+                console.log('🔗 Constructed full URL:', finalUrl);
+            }
+
+            // Add cache busting
+            finalUrl += (finalUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
+
+            // Create new Image to handle loading errors
+            const img = new Image();
+            img.onload = function () {
+                console.log('✅ Profile picture loaded successfully');
+                profileAvatar.style.backgroundImage = `url("${finalUrl}")`;
+                profileAvatar.textContent = '';
+                headerAvatar.style.backgroundImage = `url("${finalUrl}")`;
+                headerAvatar.textContent = '';
+            };
+            img.onerror = function () {
+                console.error('❌ Failed to load profile picture from:', finalUrl);
+                // Keep the initial if image fails to load
+                showDefaultAvatar();
+
+                // Log additional debug info
+                console.log('📝 Debug info:', {
+                    originalUrl: imageUrl,
+                    finalUrl: finalUrl,
+                    currentUser: currentUser ? currentUser.id : 'none'
+                });
+            };
+            img.src = finalUrl;
+        }
+
+        // Handle image upload - IMPROVED VERSION
+        async function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) {
+                console.log('No file selected');
+                return;
+            }
+
+            console.log('📁 File selected:', {
+                name: file.name,
+                type: file.type,
+                size: file.size
+            });
+
+            // Validate file type
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                showError('Please select a valid image file (JPEG, PNG, GIF, WebP)');
+                return;
+            }
+
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showError('Image size should be less than 5MB');
+                return;
+            }
+
+            // Show preview
+            showImagePreview(file);
+
+            try {
+                console.log('🔼 Starting upload process...');
+                showUploadProgress(10);
+
+                const formData = new FormData();
+                formData.append('profilePicture', file);
+
+                console.log('📤 Sending request to:', `${API_BASE}/users/profile/picture`);
+
+                const response = await fetch(`${API_BASE}/users/profile/picture`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                        // Don't set Content-Type - let browser set it with boundary
+                    },
+                    body: formData
+                });
+
+                console.log('📥 Response status:', response.status);
+                console.log('📥 Response ok:', response.ok);
+
+                showUploadProgress(60);
+
+                const responseText = await response.text();
+                console.log('📄 Raw response:', responseText);
+
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (parseError) {
+                    console.error('❌ Failed to parse JSON response:', responseText);
+                    throw new Error('Invalid server response format');
+                }
+
+                if (!response.ok) {
+                    console.error('❌ Server error response:', result);
+                    const errorMessage = result.error || result.message || result.details || `Upload failed with status ${response.status}`;
+                    throw new Error(errorMessage);
+                }
+
+                console.log('✅ Upload successful:', result);
+                showUploadProgress(100);
+
+                // Handle different response formats
+                const newImageUrl = result.profilePictureUrl ||
+                    result.url ||
+                    result.profilePicture ||
+                    result.imageUrl;
+
+                if (newImageUrl) {
+                    console.log('🎉 New profile picture URL:', newImageUrl);
+                    // Use setTimeout to ensure progress bar completes before refresh
+                    setTimeout(() => {
+                        loadProfilePicture(newImageUrl);
+                    }, 500);
+                } else {
+                    console.log('🔄 No URL in response, reloading profile...');
+                    // Reload the entire profile to get updated data
+                    setTimeout(() => {
+                        loadUserProfile();
+                    }, 500);
+                }
+
+                showSuccess('Profile picture updated successfully!');
+
+            } catch (error) {
+                console.error('❌ Error uploading image:', error);
+
+                let userMessage = 'Failed to upload profile picture';
+
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    userMessage = 'Network error. Please check your internet connection.';
+                } else if (error.message.includes('401') || error.message.includes('token')) {
+                    userMessage = 'Session expired. Please log in again.';
+                    setTimeout(logout, 2000);
+                } else if (error.message.includes('413')) {
+                    userMessage = 'File too large. Please select a smaller image (max 5MB).';
+                } else {
+                    userMessage = error.message || userMessage;
+                }
+
+                showError(userMessage);
+                // Revert to default avatar on error
+                showDefaultAvatar();
+            } finally {
+                setTimeout(() => {
+                    hideUploadProgress();
+                }, 1000);
+                // Reset file input
+                event.target.value = '';
+            }
+        }
+
+        // Show image preview before upload
+        function showImagePreview(file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const profileAvatar = document.getElementById('profile-avatar');
+                profileAvatar.style.backgroundImage = `url("${e.target.result}")`;
+                profileAvatar.textContent = '';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Show upload progress
+        function showUploadProgress(percent) {
+            const progressContainer = document.getElementById('upload-progress');
+            const progressBar = document.getElementById('progress-bar');
+
+            progressContainer.classList.remove('hidden');
+            progressBar.style.width = `${percent}%`;
+        }
+
+        // Hide upload progress
+        function hideUploadProgress() {
+            const progressContainer = document.getElementById('upload-progress');
+            progressContainer.classList.add('hidden');
+
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = '0%';
+        }
+
+        // Load user statistics
+        async function loadUserStats() {
+            try {
+                const issuesResponse = await fetch(`${API_BASE}/issues`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (issuesResponse.ok) {
+                    const issues = await issuesResponse.json();
+                    document.getElementById('issues-count').textContent = issues.length || 0;
+                } else {
+                    document.getElementById('issues-count').textContent = '0';
+                }
+
+                // Placeholder for other stats
+                document.getElementById('votes-count').textContent = '0';
+                document.getElementById('comments-count').textContent = '0';
+
+            } catch (error) {
+                console.error('Error loading stats:', error);
+                document.getElementById('issues-count').textContent = '0';
+                document.getElementById('votes-count').textContent = '0';
+                document.getElementById('comments-count').textContent = '0';
+            }
+        }
+
+        // Update profile form handler
+        document.getElementById('profile-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (!username || !email) {
+                showError('Please fill in all required fields');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/users/profile`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ username, email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Profile updated successfully!');
+                    // Update header
+                    const newInitial = username.charAt(0).toUpperCase();
+                    document.getElementById('header-avatar').textContent = newInitial;
+                    document.getElementById('header-username').textContent = username;
+
+                    if (currentUser) {
+                        currentUser.username = username;
+                        currentUser.email = email;
+                    }
+                } else {
+                    showError(data.error || 'Failed to update profile');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showError('Failed to update profile: ' + error.message);
+            }
+        });
+
+        // Email validation
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Utility functions
+        function showError(message) {
+            const errorDiv = document.getElementById('profile-error');
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            errorDiv.classList.remove('hidden');
+            document.getElementById('profile-success').classList.add('hidden');
+            setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('profile-success');
+            successDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            successDiv.classList.remove('hidden');
+            document.getElementById('profile-error').classList.add('hidden');
+            setTimeout(() => successDiv.classList.add('hidden'), 5000);
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            window.location.href = 'user.html';
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('🚀 Profile page initialized');
+            loadUserProfile();
+
+            // Add click handler for avatar overlay
+            document.querySelector('.avatar-overlay').addEventListener('click', function () {
+                document.getElementById('avatar-input').click();
+            });
+        });
+    </script>
+</body>
+
+</html>

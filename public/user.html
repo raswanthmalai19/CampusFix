@@ -1,0 +1,2276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Issue Resolution - User Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --primary-light: #4895ef;
+            --secondary: #7209b7;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --danger: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 16px;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.15s ease;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --gradient-primary: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+            --gradient-success: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+            --gradient-warning: linear-gradient(135deg, #f72585 0%, #7209b7 100%);
+            --gradient-danger: linear-gradient(135deg, #e63946 0%, #f72585 100%);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-700);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+            letter-spacing: -0.025em;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h3 {
+            font-size: 1.375rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--gray-800);
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            box-shadow: var(--shadow-md);
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition);
+            margin-bottom: 24px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--gray-50);
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-800);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-success {
+            background: var(--gradient-success);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-danger {
+            background: var(--gradient-danger);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-sm {
+            padding: 10px 18px;
+            font-size: 0.875rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+        }
+
+        .status-pending {
+            background: var(--gradient-warning);
+            color: white;
+        }
+
+        .status-processing {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .status-completed {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .status-rejected {
+            background: var(--gradient-danger);
+            color: white;
+        }
+
+        /* Issue cards */
+        .issue-card {
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .issue-card:hover {
+            border-left-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .issue-meta {
+            display: flex;
+            gap: 16px;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .issue-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .issue-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Comments section */
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .comment {
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .comment-date {
+            color: var(--gray-500);
+        }
+
+        /* Search bar */
+        .search-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .search-input {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+            z-index: 2;
+        }
+
+        .search-input .form-control {
+            padding-left: 48px;
+            border-radius: 50px;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Messages */
+        .message {
+            padding: 16px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .error-message {
+            background: rgba(230, 57, 70, 0.1);
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+
+        .success-message {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        /* Utility classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-0 {
+            margin-bottom: 0;
+        }
+
+        .mt-4 {
+            margin-top: 24px;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .align-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-2 {
+            gap: 8px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .issue-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .issue-actions {
+                flex-wrap: wrap;
+            }
+
+            #auth-forms .card-body>div {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Animation for page transitions */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* Loading state */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Glassmorphism elements */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Pill buttons for issue actions */
+        .pill-btn {
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        /* User dropdown */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            min-width: 160px;
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--border-radius);
+            z-index: 1;
+            margin-top: 8px;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+        }
+
+        .dropdown-content a {
+            color: var(--gray-700);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-fast);
+        }
+
+        .dropdown-content a:hover {
+            background: var(--gray-100);
+        }
+
+        .user-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Issue stats */
+        .issue-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-pending .stat-icon {
+            background: rgba(247, 37, 133, 0.1);
+            color: var(--warning);
+        }
+
+        .stat-processing .stat-icon {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .stat-completed .stat-icon {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        /* Filter Styles */
+        .filter-container {
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 24px;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+        }
+
+        /* Layout improvements */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .app-section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Welcome section */
+        .welcome-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 32px;
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .welcome-section p {
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto 24px;
+        }
+
+        /* Auth forms layout */
+        .auth-form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .auth-form {
+            padding: 30px;
+            border-radius: var(--border-radius-lg);
+            background: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray-500);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Issue grid */
+        .issues-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        /* Action buttons container */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* Form improvements */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Enhanced responsive design */
+        @media (max-width: 1024px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .auth-form-container {
+                padding: 20px 0;
+            }
+
+            .issue-stats {
+                flex-direction: column;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* New Layout for Main App */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 24px;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .main-content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .app-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        /* Auth page navigation */
+        .auth-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .auth-nav-item {
+            padding: 12px 24px;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .auth-nav-item.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .auth-nav-item:hover {
+            color: var(--primary);
+        }
+
+        /* Add to your existing CSS */
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            box-shadow: var(--shadow-md);
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Add to your existing CSS */
+        .issue-image {
+            text-align: center;
+        }
+
+        .issue-image img {
+            transition: var(--transition);
+        }
+
+        .issue-image img:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* File input styling */
+        input[type="file"] {
+            cursor: pointer;
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background: var(--gray-200);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius-sm);
+            padding: 8px 16px;
+            cursor: pointer;
+            margin-right: 12px;
+            transition: var(--transition-fast);
+        }
+
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background: var(--gray-300);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="glass">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-tools"></i>
+                    <h1>Campus Issue Resolution System</h1>
+                </div>
+                <div id="user-info" class="user-info"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 30px 0;">
+        <!-- Login/Register Forms -->
+        <div id="auth-forms" class="fade-in">
+            <div class="auth-form-container">
+                <div class="auth-nav">
+                    <div class="auth-nav-item active" id="login-nav">Login</div>
+                    <div class="auth-nav-item" id="register-nav">Register</div>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-section" class="auth-form">
+                    <div class="section-title">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <h2>Login to Your Account</h2>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" class="form-control" placeholder="Enter your username"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control"
+                            placeholder="Enter your password" required>
+                    </div>
+                    <div id="login-error" class="error-message hidden"></div>
+                    <button id="login-btn" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-section" class="auth-form hidden">
+                    <div class="section-title">
+                        <i class="fas fa-user-plus"></i>
+                        <h2>Create New Account</h2>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-username">Username</label>
+                        <input type="text" id="register-username" class="form-control" placeholder="Choose a username"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" class="form-control" placeholder="Enter your email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" class="form-control"
+                            placeholder="Create a password (min. 6 characters)" required>
+                    </div>
+                    <div id="register-error" class="error-message hidden"></div>
+                    <div id="register-success" class="success-message hidden"></div>
+                    <button id="register-btn" class="btn btn-secondary" style="width: 100%;">
+                        <i class="fas fa-user-plus"></i> Register
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Application (hidden until logged in) -->
+        <div id="app" class="hidden fade-in">
+            <div class="app-layout">
+                <!-- Sidebar with Filters -->
+                <div class="sidebar">
+                    <div class="section-title">
+                        <i class="fas fa-filter"></i>
+                        <h2>Filters</h2>
+                    </div>
+
+                    <div class="filter-container">
+                        <div class="filter-group">
+                            <label for="search-issues">Search Issues</label>
+                            <div class="search-input">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-issues" class="form-control"
+                                    placeholder="Search by keywords...">
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="filter-status">Filter by Status</label>
+                            <select id="filter-status" class="form-control">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="processing">In Progress</option>
+                                <option value="completed">Completed</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="filter-category">Filter by Category</label>
+                            <select id="filter-category" class="form-control">
+                                <option value="all">All Categories</option>
+                            </select>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="search-btn" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                            <button id="clear-filters" class="btn btn-outline">
+                                <i class="fas fa-times"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="main-content-area">
+                    <!-- Welcome Section -->
+                    <div class="welcome-section" style="padding: 30px; text-align: left;">
+                        <div class="d-flex justify-between align-center" style="flex-wrap: wrap; gap: 20px;">
+                            <div>
+                                <h1>Welcome back, <span id="user-greeting">User</span>!</h1>
+                                <p>Manage and track your reported issues below.</p>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary"
+                                    onclick="document.getElementById('report-issue-section').scrollIntoView({behavior: 'smooth'})">
+                                    <i class="fas fa-plus-circle"></i> Report New Issue
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Issue Stats -->
+                    <div class="app-section">
+                        <div class="section-title">
+                            <i class="fas fa-chart-bar"></i>
+                            <h2>Issue Overview</h2>
+                        </div>
+                        <div class="issue-stats">
+                            <div class="stat-card stat-pending">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <div class="stat-number" id="pending-count">0</div>
+                                    <div class="stat-label">Pending Issues</div>
+                                </div>
+                            </div>
+                            <div class="stat-card stat-processing">
+                                <div class="stat-icon">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <div class="stat-number" id="processing-count">0</div>
+                                    <div class="stat-label">In Progress</div>
+                                </div>
+                            </div>
+                            <div class="stat-card stat-completed">
+                                <div class="stat-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <div class="stat-number" id="completed-count">0</div>
+                                    <div class="stat-label">Resolved</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Create Issue Form -->
+                    <!-- In the Create Issue Form section -->
+                    <div id="report-issue-section" class="app-section">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="section-title">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <h2>Report New Issue</h2>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="issue-title">Issue Title</label>
+                                        <input type="text" id="issue-title" class="form-control" required
+                                            placeholder="Brief description of the issue">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="issue-category">Category</label>
+                                        <select id="issue-category" class="form-control" required></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="issue-description">Description</label>
+                                    <textarea id="issue-description" class="form-control" rows="4" required
+                                        placeholder="Please provide detailed information about the issue"></textarea>
+                                </div>
+
+                                <!-- ADD THIS SECTION FOR IMAGE UPLOAD -->
+                                <div class="form-group">
+                                    <label for="issue-image">Attach Image (Optional)</label>
+                                    <input type="file" id="issue-image" class="form-control" accept="image/*"
+                                        style="padding: 8px;">
+                                    <small style="color: var(--gray-500); font-size: 0.875rem;">
+                                        Supported formats: JPEG, PNG, GIF (Max 5MB)
+                                    </small>
+                                    <div id="image-preview" class="hidden" style="margin-top: 12px;">
+                                        <img id="preview-img" src="#" alt="Image preview"
+                                            style="max-width: 200px; max-height: 150px; border-radius: var(--border-radius); border: 1px solid var(--gray-300);">
+                                        <button type="button" id="remove-image" class="btn btn-outline btn-sm"
+                                            style="margin-left: 8px;">
+                                            <i class="fas fa-times"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="issue-error" class="error-message hidden"></div>
+                                <div id="issue-success" class="success-message hidden"></div>
+                                <div class="action-buttons">
+                                    <button id="create-issue-btn" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane"></i> Submit Issue
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Issues List -->
+                    <div class="app-section">
+                        <div class="card">
+                            <div class="card-header d-flex justify-between align-center">
+                                <div class="section-title">
+                                    <i class="fas fa-list"></i>
+                                    <h2>Current Issues</h2>
+                                </div>
+                                <span id="issues-count" class="status-badge status-processing">0 issues</span>
+                            </div>
+                            <div class="card-body">
+                                <div id="issues-container" class="issues-grid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // All JavaScript functionality remains exactly the same
+        // Only CSS and HTML structure have been enhanced
+        let currentUser = null;
+        let authToken = null;
+        let categories = [];
+
+        // DOM Elements
+        const authForms = document.getElementById('auth-forms');
+        const app = document.getElementById('app');
+        const issuesContainer = document.getElementById('issues-container');
+        const categorySelect = document.getElementById('issue-category');
+        const userInfoDiv = document.getElementById('user-info');
+        const loginErrorDiv = document.getElementById('login-error');
+        const registerErrorDiv = document.getElementById('register-error');
+        const registerSuccessDiv = document.getElementById('register-success');
+        const issueErrorDiv = document.getElementById('issue-error');
+        const issueSuccessDiv = document.getElementById('issue-success');
+        const issuesCount = document.getElementById('issues-count');
+        const pendingCount = document.getElementById('pending-count');
+        const processingCount = document.getElementById('processing-count');
+        const completedCount = document.getElementById('completed-count');
+        const userGreeting = document.getElementById('user-greeting');
+
+        // API Base URL
+        const API_BASE = 'https://campusfixbackend.onrender.com/api';
+
+
+
+        // Debug function
+        function debugLog(functionName, step, message, data = null) {
+            console.log(`[DEBUG] ${functionName} - Step ${step}: ${message}`);
+            if (data) console.log(`[DEBUG] ${functionName} - Data:`, data);
+        }
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', init);
+
+        function init() {
+            debugLog('init', 1, 'Application initializing');
+
+            // Check if user is already logged in
+            const savedToken = localStorage.getItem('authToken');
+            const savedUser = localStorage.getItem('user');
+
+            debugLog('init', 2, 'Checking saved authentication', { hasToken: !!savedToken, hasUser: !!savedUser });
+
+            if (savedToken && savedUser) {
+                authToken = savedToken;
+                currentUser = JSON.parse(savedUser);
+
+                // SECURITY FIX: Validate user role before showing app
+                if (currentUser.role === 'user') {
+                    debugLog('init', 3, 'Valid user found in localStorage, showing app');
+                    showApp();
+                } else {
+                    debugLog('init', 3, 'Non-user role detected, clearing storage');
+                    // Clear storage if user is not a regular user (e.g., supervisor/admin)
+                    logout();
+                    alert('Access denied. Please use the appropriate portal for your role.');
+                }
+            } else {
+                debugLog('init', 3, 'No user found in localStorage');
+            }
+
+            // Set up event listeners
+            document.getElementById('login-btn').addEventListener('click', login);
+            document.getElementById('register-btn').addEventListener('click', register);
+            document.getElementById('create-issue-btn').addEventListener('click', createIssue);
+
+            // Add navigation between login and register
+            document.getElementById('login-nav').addEventListener('click', () => showAuthSection('login'));
+            document.getElementById('register-nav').addEventListener('click', () => showAuthSection('register'));
+
+            // ADD THIS LINE: Initialize image preview
+            setupImagePreview();
+
+            debugLog('init', 4, 'Event listeners set up');
+        }
+        // Show either login or register section
+        function showAuthSection(section) {
+            const loginSection = document.getElementById('login-section');
+            const registerSection = document.getElementById('register-section');
+            const loginNav = document.getElementById('login-nav');
+            const registerNav = document.getElementById('register-nav');
+
+            if (section === 'login') {
+                loginSection.classList.remove('hidden');
+                registerSection.classList.add('hidden');
+                loginNav.classList.add('active');
+                registerNav.classList.remove('active');
+            } else {
+                loginSection.classList.add('hidden');
+                registerSection.classList.remove('hidden');
+                loginNav.classList.remove('active');
+                registerNav.classList.add('active');
+            }
+        }
+
+        // Login function
+        async function login() {
+            debugLog('login', 1, 'Login function started');
+
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            debugLog('login', 2, 'Login credentials retrieved', { username, passwordLength: password.length });
+
+            if (!username || !password) {
+                debugLog('login', 3, 'Validation failed: missing username or password');
+                showError(loginErrorDiv, 'Please enter both username and password');
+                return;
+            }
+
+            try {
+                debugLog('login', 4, 'Sending login request to server');
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                debugLog('login', 5, 'Login response received', { status: response.status, ok: response.ok });
+
+                const data = await response.json();
+                debugLog('login', 6, 'Login response parsed', data);
+
+                if (response.ok) {
+                    // SECURITY FIX: Validate user role on the client side as well
+                    if (data.user.role !== 'user') {
+                        debugLog('login', 7, 'Login rejected: User is not a regular user');
+                        showError(loginErrorDiv, 'Access denied. Please use the appropriate portal for your role.');
+                        return;
+                    }
+
+                    authToken = data.token;
+                    currentUser = data.user;
+
+                    debugLog('login', 7, 'Login successful, saving to localStorage');
+                    // Save to localStorage
+                    localStorage.setItem('authToken', authToken);
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+
+                    hideError(loginErrorDiv);
+                    showApp();
+                    loadCategories();
+                } else {
+                    debugLog('login', 7, 'Login failed with server error');
+                    showError(loginErrorDiv, 'Login failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                debugLog('login', 8, 'Login error caught', error);
+                console.error('Login error:', error);
+                showError(loginErrorDiv, 'Login failed. Please try again.');
+            }
+        }
+
+        // Register function
+        async function register() {
+            debugLog('register', 1, 'Register function started');
+
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            debugLog('register', 2, 'Registration data retrieved', { username, email, passwordLength: password.length });
+
+            if (!username || !email || !password) {
+                debugLog('register', 3, 'Validation failed: missing fields');
+                showError(registerErrorDiv, 'Please fill in all fields');
+                return;
+            }
+
+            // Basic validation
+            if (password.length < 6) {
+                showError(registerErrorDiv, 'Password must be at least 6 characters long');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showError(registerErrorDiv, 'Please enter a valid email address');
+                return;
+            }
+
+            try {
+                debugLog('register', 4, 'Sending registration request to server');
+                const response = await fetch(`${API_BASE}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password, role: 'user' })
+                });
+
+                debugLog('register', 5, 'Registration response received', { status: response.status, ok: response.ok });
+
+                const data = await response.json();
+                debugLog('register', 6, 'Registration response parsed', data);
+
+                if (response.ok) {
+                    debugLog('register', 7, 'Registration successful');
+                    hideError(registerErrorDiv);
+                    showSuccess(registerSuccessDiv, 'Registration successful. Please login.');
+
+                    // Clear registration form
+                    document.getElementById('register-username').value = '';
+                    document.getElementById('register-email').value = '';
+                    document.getElementById('register-password').value = '';
+
+                    // Switch to login form
+                    setTimeout(() => {
+                        showAuthSection('login');
+                    }, 2000);
+                } else {
+                    debugLog('register', 7, 'Registration failed with server error');
+                    showError(registerErrorDiv, 'Registration failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                debugLog('register', 8, 'Registration error caught', error);
+                console.error('Registration error:', error);
+                showError(registerErrorDiv, 'Registration failed. Please try again.');
+            }
+        }
+
+        // Show main application
+        function showApp() {
+            debugLog('showApp', 1, 'Showing main application');
+
+            authForms.classList.add('hidden');
+            app.classList.remove('hidden');
+
+            // Update user info
+            userInfoDiv.innerHTML = `
+        <div class="user-dropdown">
+            <div class="d-flex align-center gap-2" style="cursor: pointer;">
+                <div class="user-avatar" id="header-avatar">
+                    ${currentUser.username.charAt(0).toUpperCase()}
+                </div>
+                <span>Welcome, ${currentUser.username}</span>
+                <i class="fas fa-chevron-down" style="font-size: 0.875rem;"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    `;
+
+            // Update greeting
+            userGreeting.textContent = currentUser.username;
+
+            debugLog('showApp', 2, 'UI updated, loading categories and issues');
+            // Load categories first, then issues and filters
+            loadCategories().then(() => {
+                loadIssues();
+                initializeFilters();
+                loadHeaderProfilePicture();
+            });
+        }
+
+        // Logout function
+        function logout() {
+            debugLog('logout', 1, 'Logout function started');
+
+            authToken = null;
+            currentUser = null;
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+
+            debugLog('logout', 2, 'User data cleared, showing auth forms');
+            app.classList.add('hidden');
+            authForms.classList.remove('hidden');
+
+            // Clear any form data
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            hideError(loginErrorDiv);
+
+            // Show login form by default
+            showAuthSection('login');
+        }
+
+        // Load categories
+        async function loadCategories() {
+            debugLog('loadCategories', 1, 'Loading categories');
+
+            if (!authToken) {
+                debugLog('loadCategories', 2, 'No auth token available');
+                categorySelect.innerHTML = '<option value="">Please login first</option>';
+                return;
+            }
+
+            try {
+                debugLog('loadCategories', 3, 'Sending categories request to server');
+                const response = await fetch(`${API_BASE}/categories`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                debugLog('loadCategories', 4, 'Categories response received', { status: response.status, ok: response.ok });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        debugLog('loadCategories', 5, 'Unauthorized access, logging out');
+                        logout();
+                        alert('Session expired. Please login again.');
+                        return;
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const categoriesData = await response.json();
+                debugLog('loadCategories', 6, 'Categories data parsed', { count: categoriesData.length });
+
+                if (!Array.isArray(categoriesData)) {
+                    debugLog('loadCategories', 7, 'Invalid categories data format');
+                    throw new Error('Invalid response format from server');
+                }
+
+                categories = categoriesData;
+
+                debugLog('loadCategories', 8, 'Populating category dropdown');
+                // Populate category dropdown
+                categorySelect.innerHTML = '<option value="">Select a category</option>';
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.id;
+                    option.textContent = category.name;
+                    categorySelect.appendChild(option);
+                });
+
+                debugLog('loadCategories', 9, 'Categories loaded successfully');
+            } catch (error) {
+                debugLog('loadCategories', 10, 'Error loading categories', error);
+                console.error('Error loading categories:', error);
+                categorySelect.innerHTML = '<option value="">Unable to load categories</option>';
+            }
+        }
+
+        // Load issues
+        async function loadIssues() {
+            debugLog('loadIssues', 1, 'Loading issues');
+
+            if (!authToken) {
+                debugLog('loadIssues', 2, 'No auth token available');
+                issuesContainer.innerHTML = '<p>Please login to view issues</p>';
+                return;
+            }
+
+            try {
+                debugLog('loadIssues', 3, 'Sending issues request to server');
+                const response = await fetch(`${API_BASE}/issues`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                debugLog('loadIssues', 4, 'Issues response received', { status: response.status, ok: response.ok });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        debugLog('loadIssues', 5, 'Unauthorized access, logging out');
+                        logout();
+                        alert('Session expired. Please login again.');
+                        return;
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const issues = await response.json();
+                debugLog('loadIssues', 6, 'Issues data parsed', { count: issues.length });
+
+                // Store all issues globally for filtering - ADD THIS LINE
+                window.allIssues = issues;
+
+                displayIssues(issues);
+                updateIssueStats(issues);
+                debugLog('loadIssues', 7, 'Issues displayed successfully');
+            } catch (error) {
+                debugLog('loadIssues', 8, 'Error loading issues', error);
+                console.error('Error loading issues:', error);
+                issuesContainer.innerHTML = '<p>Error loading issues. Please try again.</p>';
+            }
+        }
+
+        // Update issue statistics
+        function updateIssueStats(issues) {
+            const pending = issues.filter(issue => issue.status === 'pending').length;
+            const processing = issues.filter(issue => issue.status === 'processing').length;
+            const completed = issues.filter(issue => issue.status === 'completed').length;
+
+            pendingCount.textContent = pending;
+            processingCount.textContent = processing;
+            completedCount.textContent = completed;
+        }
+
+        // Display issues
+// Update the displayIssues function
+function displayIssues(issues) {
+    debugLog('displayIssues', 1, 'Displaying issues', { count: issues.length });
+
+    issuesContainer.innerHTML = '';
+    issuesCount.textContent = `${issues.length} ${issues.length === 1 ? 'issue' : 'issues'}`;
+
+    if (issues.length === 0) {
+        debugLog('displayIssues', 2, 'No issues to display');
+        issuesContainer.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <h3>No Issues Found</h3>
+                <p>No issues match your current search or filter criteria.</p>
+                <button class="btn btn-outline" onclick="clearFilters(); clearSearch();">
+                    <i class="fas fa-times"></i> Clear All Filters
+                </button>
+            </div>
+        `;
+        return;
+    }
+
+    debugLog('displayIssues', 3, 'Creating issue elements');
+    issues.forEach(issue => {
+        const issueElement = document.createElement('div');
+        issueElement.className = 'issue-card card';
+
+        const statusClass = `status-${issue.status}`;
+        const statusIcon = getStatusIcon(issue.status);
+
+        // Build image HTML if issue has an image - UPDATED TO USE image_url
+        const imageHtml = issue.image_url ? `
+            <div class="issue-image" style="margin: 16px 0;">
+                <img src="${issue.image_url}" 
+                     alt="Issue image" 
+                     style="max-width: 100%; max-height: 300px; border-radius: var(--border-radius); border: 1px solid var(--gray-200); cursor: pointer;"
+                     onclick="openImageModal('${issue.image_url}')">
+                <small style="color: var(--gray-500); font-size: 0.75rem;">Click to enlarge</small>
+            </div>
+        ` : '';
+
+        issueElement.innerHTML = `
+            <div class="card-body">
+                <div class="issue-header">
+                    <h3 class="mb-0">${escapeHtml(issue.title)}</h3>
+                    <span class="status-badge ${statusClass}">
+                        <i class="${statusIcon}"></i> ${issue.status}
+                    </span>
+                </div>
+                <div class="issue-meta">
+                    <span><i class="fas fa-tag"></i> ${escapeHtml(issue.category_name)}</span>
+                    <span><i class="fas fa-user"></i> ${escapeHtml(issue.user_name)}</span>
+                    <span><i class="fas fa-calendar"></i> ${new Date(issue.created_at).toLocaleDateString()}</span>
+                </div>
+                <p>${escapeHtml(issue.description)}</p>
+                
+                ${imageHtml}
+                
+                <div class="issue-actions">
+                    <button class="btn btn-outline btn-sm pill-btn" onclick="voteIssue(${issue.id}, 'upvote')">
+                        <i class="fas fa-thumbs-up"></i> Upvote (${issue.upvotes})
+                    </button>
+                    <button class="btn btn-outline btn-sm pill-btn" onclick="voteIssue(${issue.id}, 'downvote')">
+                        <i class="fas fa-thumbs-down"></i> Downvote (${issue.downvotes})
+                    </button>
+                    <button class="btn btn-outline btn-sm pill-btn" onclick="viewComments(${issue.id})">
+                        <i class="fas fa-comments"></i> Comments
+                    </button>
+                </div>
+                <div id="comments-${issue.id}" class="comments-section hidden">
+                    <h4><i class="fas fa-comments"></i> Comments</h4>
+                    <div id="comments-list-${issue.id}"></div>
+                    <div class="form-group mt-4">
+                        <textarea id="comment-text-${issue.id}" class="form-control" rows="2" placeholder="Add a comment..."></textarea>
+                        <button class="btn btn-primary btn-sm mt-2 pill-btn" onclick="addComment(${issue.id})">
+                            <i class="fas fa-paper-plane"></i> Post Comment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        issuesContainer.appendChild(issueElement);
+    });
+
+    debugLog('displayIssues', 4, 'All issues displayed');
+}
+
+        // Add image modal function
+        function openImageModal(imageUrl) {
+            // Create modal overlay
+            const modalOverlay = document.createElement('div');
+            modalOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        cursor: pointer;
+    `;
+
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+        max-width: 90%;
+        max-height: 90%;
+        position: relative;
+        cursor: default;
+    `;
+
+            const modalImage = document.createElement('img');
+            modalImage.src = imageUrl;
+            modalImage.style.cssText = `
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-xl);
+    `;
+
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '<i class="fas fa-times"></i>';
+            closeButton.style.cssText = `
+        position: absolute;
+        top: -40px;
+        right: 0;
+        background: var(--danger);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+
+            closeButton.addEventListener('click', () => {
+                document.body.removeChild(modalOverlay);
+            });
+
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    document.body.removeChild(modalOverlay);
+                }
+            });
+
+            modalContent.appendChild(modalImage);
+            modalContent.appendChild(closeButton);
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+        }
+
+        // Helper function to get status icon
+        function getStatusIcon(status) {
+            switch (status) {
+                case 'pending': return 'fas fa-clock';
+                case 'processing': return 'fas fa-cog fa-spin';
+                case 'completed': return 'fas fa-check-circle';
+                case 'rejected': return 'fas fa-times-circle';
+                default: return 'fas fa-question-circle';
+            }
+        }
+
+        // Create new issue
+        async function createIssue() {
+            debugLog('createIssue', 1, 'Creating new issue');
+
+            const title = document.getElementById('issue-title').value;
+            const description = document.getElementById('issue-description').value;
+            const categoryId = document.getElementById('issue-category').value;
+            const imageFile = document.getElementById('issue-image').files[0];
+
+            debugLog('createIssue', 2, 'Issue data retrieved', {
+                title,
+                description,
+                categoryId,
+                hasImage: !!imageFile
+            });
+
+            if (!title || !description || !categoryId) {
+                debugLog('createIssue', 3, 'Validation failed: missing fields');
+                showError(issueErrorDiv, 'Please fill in all required fields');
+                return;
+            }
+
+            try {
+                debugLog('createIssue', 4, 'Sending create issue request to server');
+
+                const formData = new FormData();
+                formData.append('title', title);
+                formData.append('description', description);
+                formData.append('category_id', categoryId);
+
+                if (imageFile) {
+                    formData.append('issueImage', imageFile);
+                }
+
+                const response = await fetch(`${API_BASE}/issues`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                        // Don't set Content-Type - let browser set it with boundary
+                    },
+                    body: formData
+                });
+
+                debugLog('createIssue', 5, 'Create issue response received', { status: response.status, ok: response.ok });
+
+                const data = await response.json();
+                debugLog('createIssue', 6, 'Create issue response parsed', data);
+
+                if (response.ok) {
+                    debugLog('createIssue', 7, 'Issue created successfully');
+                    hideError(issueErrorDiv);
+                    showSuccess(issueSuccessDiv, 'Issue created successfully!');
+
+                    // Clear form
+                    document.getElementById('issue-title').value = '';
+                    document.getElementById('issue-description').value = '';
+                    document.getElementById('issue-category').value = '';
+                    document.getElementById('issue-image').value = '';
+                    document.getElementById('image-preview').classList.add('hidden');
+
+                    // Reload issues
+                    loadIssues();
+
+                    // Hide success message after 3 seconds
+                    setTimeout(() => {
+                        hideSuccess(issueSuccessDiv);
+                    }, 3000);
+                } else {
+                    debugLog('createIssue', 7, 'Create issue failed with server error');
+                    showError(issueErrorDiv, 'Failed to create issue: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                debugLog('createIssue', 8, 'Create issue error caught', error);
+                console.error('Error creating issue:', error);
+                showError(issueErrorDiv, 'Failed to create issue. Please try again.');
+            }
+        }
+
+        // Vote on issue
+        async function voteIssue(issueId, voteType) {
+            debugLog('voteIssue', 1, 'Voting on issue', { issueId, voteType });
+
+            try {
+                debugLog('voteIssue', 2, 'Sending vote request to server');
+                const response = await fetch(`${API_BASE}/issues/${issueId}/vote`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ voteType })
+                });
+
+                debugLog('voteIssue', 3, 'Vote response received', { status: response.status, ok: response.ok });
+
+                const data = await response.json();
+                debugLog('voteIssue', 4, 'Vote response parsed', data);
+
+                if (response.ok) {
+                    debugLog('voteIssue', 5, 'Vote successful, reloading issues');
+                    // Reload issues to update vote counts
+                    loadIssues();
+                } else {
+                    debugLog('voteIssue', 5, 'Vote failed with server error');
+                    alert('Vote failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                debugLog('voteIssue', 6, 'Vote error caught', error);
+                console.error('Error voting:', error);
+                alert('Failed to vote. Please try again.');
+            }
+        }
+
+        // View comments for an issue
+        async function viewComments(issueId) {
+            debugLog('viewComments', 1, 'Viewing comments', { issueId });
+
+            const commentsDiv = document.getElementById(`comments-${issueId}`);
+            const commentsListDiv = document.getElementById(`comments-list-${issueId}`);
+
+            debugLog('viewComments', 2, 'Comment elements found', {
+                commentsDivExists: !!commentsDiv,
+                commentsListDivExists: !!commentsListDiv
+            });
+
+            // Toggle visibility
+            if (commentsDiv.classList.contains('hidden')) {
+                try {
+                    debugLog('viewComments', 3, 'Fetching comments from server');
+                    const response = await fetch(`${API_BASE}/issues/${issueId}/comments`, {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        }
+                    });
+
+                    debugLog('viewComments', 4, 'Comments response received', { status: response.status, ok: response.ok });
+
+                    if (response.ok) {
+                        const comments = await response.json();
+                        debugLog('viewComments', 5, 'Comments data parsed', { count: comments.length });
+
+                        commentsListDiv.innerHTML = '';
+                        if (comments.length === 0) {
+                            debugLog('viewComments', 6, 'No comments found');
+                            commentsListDiv.innerHTML = '<div class="text-center" style="padding: 20px;"><i class="fas fa-comment-slash" style="font-size: 2rem; color: var(--gray-400); margin-bottom: 8px;"></i><p>No comments yet.</p></div>';
+                        } else {
+                            debugLog('viewComments', 6, 'Displaying comments');
+                            comments.forEach(comment => {
+                                const commentElement = document.createElement('div');
+                                commentElement.className = 'comment';
+                                commentElement.innerHTML = `
+                                    <div class="comment-header">
+                                        <span class="comment-author">${escapeHtml(comment.username)}</span>
+                                        <span class="comment-date">${new Date(comment.created_at).toLocaleDateString()}</span>
+                                    </div>
+                                    <p class="mb-0">${escapeHtml(comment.comment)}</p>
+                                `;
+                                commentsListDiv.appendChild(commentElement);
+                            });
+                        }
+
+                        debugLog('viewComments', 7, 'Showing comments section');
+                        commentsDiv.classList.remove('hidden');
+                    } else {
+                        debugLog('viewComments', 5, 'Failed to load comments');
+                        console.error('Failed to load comments');
+                    }
+                } catch (error) {
+                    debugLog('viewComments', 8, 'Error loading comments', error);
+                    console.error('Error loading comments:', error);
+                }
+            } else {
+                debugLog('viewComments', 9, 'Hiding comments section');
+                commentsDiv.classList.add('hidden');
+            }
+        }
+
+        // Add comment to issue
+        async function addComment(issueId) {
+            debugLog('addComment', 1, 'Adding comment', { issueId });
+
+            const commentText = document.getElementById(`comment-text-${issueId}`).value;
+            debugLog('addComment', 2, 'Comment text retrieved', { commentText });
+
+            if (!commentText.trim()) {
+                debugLog('addComment', 3, 'Validation failed: empty comment');
+                alert('Please enter a comment');
+                return;
+            }
+
+            try {
+                debugLog('addComment', 4, 'Sending comment to server');
+                const response = await fetch(`${API_BASE}/issues/${issueId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ comment: commentText })
+                });
+
+                debugLog('addComment', 5, 'Add comment response received', { status: response.status, ok: response.ok });
+
+                const data = await response.json();
+                debugLog('addComment', 6, 'Add comment response parsed', data);
+
+                if (response.ok) {
+                    debugLog('addComment', 7, 'Comment added successfully');
+                    // Clear comment textarea
+                    document.getElementById(`comment-text-${issueId}`).value = '';
+                    // Reload comments
+                    viewComments(issueId);
+                } else {
+                    debugLog('addComment', 7, 'Add comment failed with server error');
+                    alert('Failed to add comment: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                debugLog('addComment', 8, 'Add comment error caught', error);
+                console.error('Error adding comment:', error);
+                alert('Failed to add comment. Please try again.');
+            }
+        }
+
+        // Utility functions
+        function showError(element, message) {
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        function hideError(element) {
+            element.textContent = '';
+            element.classList.add('hidden');
+        }
+
+        function showSuccess(element, message) {
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        function hideSuccess(element) {
+            element.textContent = '';
+            element.classList.add('hidden');
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // SECURITY FIX: Prevent XSS attacks by escaping HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Add to your existing event listeners
+        document.getElementById('search-btn').addEventListener('click', performSearch);
+        document.getElementById('search-issues').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') performSearch();
+        });
+        document.getElementById('clear-filters').addEventListener('click', clearFilters);
+
+        // Search function
+        async function performSearch() {
+            const searchQuery = document.getElementById('search-issues').value.trim();
+
+            if (!searchQuery) {
+                loadIssues(); // Load all issues if search is empty
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/search/issues?q=${encodeURIComponent(searchQuery)}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const issues = await response.json();
+                    displayIssues(issues);
+                    updateIssueStats(issues);
+                } else {
+                    console.error('Search failed');
+                    loadIssues(); // Fallback to loading all issues
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                loadIssues(); // Fallback to loading all issues
+            }
+        }
+
+        // Clear search function
+        function clearSearch() {
+            document.getElementById('search-issues').value = '';
+            loadIssues();
+        }
+
+        // Initialize filters
+        function initializeFilters() {
+            // Populate category filter
+            const categoryFilter = document.getElementById('filter-category');
+            categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                categoryFilter.appendChild(option);
+            });
+
+            // Add event listeners for filters
+            document.getElementById('filter-status').addEventListener('change', applyFilters);
+            document.getElementById('filter-category').addEventListener('change', applyFilters);
+        }
+
+        // Apply filters to issues
+        function applyFilters() {
+            const statusFilter = document.getElementById('filter-status').value;
+            const categoryFilter = document.getElementById('filter-category').value;
+
+            if (window.allIssues) {
+                let filteredIssues = window.allIssues;
+
+                // Apply status filter
+                if (statusFilter !== 'all') {
+                    filteredIssues = filteredIssues.filter(issue => issue.status === statusFilter);
+                }
+
+                // Apply category filter
+                if (categoryFilter !== 'all') {
+                    filteredIssues = filteredIssues.filter(issue => issue.category_id == categoryFilter);
+                }
+
+                displayIssues(filteredIssues);
+                updateIssueStats(filteredIssues);
+            }
+        }
+
+        // Clear all filters
+        function clearFilters() {
+            document.getElementById('filter-status').value = 'all';
+            document.getElementById('filter-category').value = 'all';
+            document.getElementById('search-issues').value = '';
+            loadIssues();
+        }
+        // Add this new function to load profile picture in header
+        async function loadHeaderProfilePicture() {
+            try {
+                console.log('🔄 Loading profile picture for header...');
+                const response = await fetch(`${API_BASE}/users/profile/picture`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const pictureData = await response.json();
+                    console.log('✅ Header profile picture loaded:', pictureData);
+
+                    if (pictureData.profilePictureUrl) {
+                        setHeaderProfilePicture(pictureData.profilePictureUrl);
+                    }
+                } else if (response.status === 404) {
+                    console.log('ℹ️ No profile picture set for header');
+                    // Keep the initial avatar
+                }
+            } catch (error) {
+                console.error('❌ Error loading header profile picture:', error);
+            }
+        }
+
+        // Function to set the profile picture in header
+        function setHeaderProfilePicture(imageUrl) {
+            const headerAvatar = document.getElementById('header-avatar');
+
+            if (!imageUrl) {
+                // Reset to initial if no image
+                const initial = currentUser.username.charAt(0).toUpperCase();
+                headerAvatar.textContent = initial;
+                headerAvatar.style.backgroundImage = '';
+                return;
+            }
+
+            // Ensure URL is properly formatted
+            let finalUrl = imageUrl;
+            if (!imageUrl.startsWith('http')) {
+                finalUrl = `https://campusfixstorage.blob.core.windows.net/campusfix/${imageUrl}`;
+            }
+
+            // Add cache busting
+            finalUrl += (finalUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
+
+            console.log('🖼️ Setting header profile picture:', finalUrl);
+
+            // Create image to test loading
+            const img = new Image();
+            img.onload = function () {
+                console.log('✅ Header profile picture loaded successfully');
+                headerAvatar.style.backgroundImage = `url("${finalUrl}")`;
+                headerAvatar.textContent = '';
+                headerAvatar.style.backgroundSize = 'cover';
+                headerAvatar.style.backgroundPosition = 'center';
+            };
+            img.onerror = function () {
+                console.error('❌ Failed to load header profile picture');
+                // Fallback to initial
+                const initial = currentUser.username.charAt(0).toUpperCase();
+                headerAvatar.textContent = initial;
+                headerAvatar.style.backgroundImage = '';
+            };
+            img.src = finalUrl;
+        }
+        // Add this new function to load profile picture in header
+        async function loadHeaderProfilePicture() {
+            try {
+                console.log('🔄 Loading profile picture for header...');
+                const response = await fetch(`${API_BASE}/users/profile/picture`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const pictureData = await response.json();
+                    console.log('✅ Header profile picture loaded:', pictureData);
+
+                    if (pictureData.profilePictureUrl) {
+                        setHeaderProfilePicture(pictureData.profilePictureUrl);
+                    }
+                } else if (response.status === 404) {
+                    console.log('ℹ️ No profile picture set for header');
+                    // Keep the initial avatar
+                }
+            } catch (error) {
+                console.error('❌ Error loading header profile picture:', error);
+            }
+        }
+
+        // Function to set the profile picture in header
+        function setHeaderProfilePicture(imageUrl) {
+            const headerAvatar = document.getElementById('header-avatar');
+
+            if (!imageUrl) {
+                // Reset to initial if no image
+                const initial = currentUser.username.charAt(0).toUpperCase();
+                headerAvatar.textContent = initial;
+                headerAvatar.style.backgroundImage = '';
+                return;
+            }
+
+            // Ensure URL is properly formatted
+            let finalUrl = imageUrl;
+            if (!imageUrl.startsWith('http')) {
+                finalUrl = `https://campusfixstorage.blob.core.windows.net/campusfix/${imageUrl}`;
+            }
+
+            // Add cache busting
+            finalUrl += (finalUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
+
+            console.log('🖼️ Setting header profile picture:', finalUrl);
+
+            // Create image to test loading
+            const img = new Image();
+            img.onload = function () {
+                console.log('✅ Header profile picture loaded successfully');
+                headerAvatar.style.backgroundImage = `url("${finalUrl}")`;
+                headerAvatar.textContent = '';
+                headerAvatar.style.backgroundSize = 'cover';
+                headerAvatar.style.backgroundPosition = 'center';
+            };
+            img.onerror = function () {
+                console.error('❌ Failed to load header profile picture');
+                // Fallback to initial
+                const initial = currentUser.username.charAt(0).toUpperCase();
+                headerAvatar.textContent = initial;
+                headerAvatar.style.backgroundImage = '';
+            };
+            img.src = finalUrl;
+        }
+        function setupImagePreview() {
+            const issueImageInput = document.getElementById('issue-image');
+            const imagePreview = document.getElementById('image-preview');
+            const previewImg = document.getElementById('preview-img');
+            const removeImageBtn = document.getElementById('remove-image');
+
+            issueImageInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    // Validate file type
+                    if (!file.type.startsWith('image/')) {
+                        showError(issueErrorDiv, 'Please select a valid image file (JPEG, PNG, GIF, etc.)');
+                        this.value = '';
+                        return;
+                    }
+
+                    // Validate file size (max 5MB)
+                    if (file.size > 5 * 1024 * 1024) {
+                        showError(issueErrorDiv, 'Image size should be less than 5MB');
+                        this.value = '';
+                        return;
+                    }
+
+                    // Create preview
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImg.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                        hideError(issueErrorDiv);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            removeImageBtn.addEventListener('click', function () {
+                issueImageInput.value = '';
+                imagePreview.classList.add('hidden');
+                previewImg.src = '#';
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>

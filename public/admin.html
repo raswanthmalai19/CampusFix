@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Issue Resolution - Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius-sm: 4px;
+            --radius: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-700);
+            background-color: var(--gray-50);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Premium Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo-icon {
+            background: rgba(255, 255, 255, 0.2);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .user-avatar:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Premium Cards */
+        .card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-100);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        /* Premium Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+        }
+
+        .btn-outline:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.75rem;
+        }
+
+        /* Premium Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 400px;
+        }
+
+        .search-box .form-control {
+            padding-left: 40px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+
+        /* Premium Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray-600);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-badge {
+            background: var(--gray-200);
+            color: var(--gray-700);
+            border-radius: 20px;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tab.active .tab-badge {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Premium Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table th,
+        .table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .table th {
+            background-color: var(--gray-50);
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table tr:hover {
+            background-color: var(--gray-50);
+        }
+
+        /* Premium Status Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-pending {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+        }
+
+        .badge-processing {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            color: white;
+        }
+
+        .badge-completed {
+            background: linear-gradient(135deg, #34d399, #10b981);
+            color: white;
+        }
+
+        .badge-rejected {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            color: white;
+        }
+
+        /* Premium Notification */
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: var(--radius);
+            color: white;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 400px;
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            color: var(--gray-500);
+        }
+
+        .mt-4 {
+            margin-top: 24px;
+        }
+
+        .mb-4 {
+            margin-bottom: 24px;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        /* Issue Cards */
+        .issue-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-100);
+        }
+
+        .issue-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .issue-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .issue-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .issue-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--gray-200);
+        }
+
+        .action-btn.primary {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .action-btn.primary:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Stats Cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card.primary .stat-value {
+            color: var(--primary);
+        }
+
+        .stat-card.success .stat-value {
+            color: var(--success);
+        }
+
+        .stat-card.warning .stat-value {
+            color: var(--warning);
+        }
+
+        .stat-card.danger .stat-value {
+            color: var(--danger);
+        }
+
+        /* Add to your existing CSS */
+        .issue-image {
+            text-align: center;
+        }
+
+        .issue-image img {
+            transition: all 0.3s ease;
+        }
+
+        .issue-image img:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Image modal styles */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .image-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .image-modal-content img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="notification" class="notification"></div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <span>Campus Issue Resolution</span>
+                </div>
+                <div id="user-info" class="user-profile">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div id="auth-forms" class="card">
+            <h2 class="card-title text-center">Admin Login</h2>
+            <div class="form-group">
+                <label for="login-username" class="form-label">Username</label>
+                <input type="text" id="login-username" class="form-control" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password" class="form-label">Password</label>
+                <input type="password" id="login-password" class="form-control" placeholder="Enter your password"
+                    required>
+            </div>
+            <button id="login-btn" class="btn btn-primary" style="width: 100%;">
+                <span>Login to Dashboard</span>
+            </button>
+        </div>
+
+        <!-- Main Application (hidden until logged in) -->
+        <div id="app" class="hidden">
+            <!-- Stats Overview -->
+            <div class="stats-container">
+                <div class="stat-card primary">
+                    <div class="stat-value" id="total-issues">0</div>
+                    <div class="stat-label">Total Issues</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-value" id="resolved-issues">0</div>
+                    <div class="stat-label">Resolved</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-value" id="pending-issues">0</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-value" id="supervisors-count">0</div>
+                    <div class="stat-label">Supervisors</div>
+                </div>
+            </div>
+
+            <!-- Tabs for different admin sections -->
+            <div class="tabs">
+                <div class="tab active" data-tab="issues">
+                    <i class="fas fa-tasks"></i>
+                    <span>Issues</span>
+                    <span class="tab-badge" id="issues-badge">0</span>
+                </div>
+                <div class="tab" data-tab="supervisors">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Supervisors</span>
+                    <span class="tab-badge" id="supervisors-badge">0</span>
+                </div>
+                <div class="tab" data-tab="categories">
+                    <i class="fas fa-tags"></i>
+                    <span>Categories</span>
+                    <span class="tab-badge" id="categories-badge">0</span>
+                </div>
+                <div class="tab" data-tab="assign">
+                    <i class="fas fa-link"></i>
+                    <span>Assignments</span>
+                </div>
+            </div>
+
+            <!-- Issues Tab -->
+            <div id="issues-tab" class="tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">All Issues</h2>
+                        <div class="search-box">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="form-control" placeholder="Search issues...">
+                        </div>
+                    </div>
+                    <div id="issues-container"></div>
+                </div>
+            </div>
+
+            <!-- Supervisors Tab -->
+            <div id="supervisors-tab" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">Supervisor Management</h2>
+                    <div class="grid">
+                        <div class="card">
+                            <h3 class="card-title">Create New Supervisor</h3>
+                            <div class="form-group">
+                                <label for="supervisor-username" class="form-label">Username</label>
+                                <input type="text" id="supervisor-username" class="form-control"
+                                    placeholder="Enter username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="supervisor-email" class="form-label">Email</label>
+                                <input type="email" id="supervisor-email" class="form-control" placeholder="Enter email"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="supervisor-password" class="form-label">Password</label>
+                                <input type="password" id="supervisor-password" class="form-control"
+                                    placeholder="Enter password" required>
+                            </div>
+                            <button id="create-supervisor-btn" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                <span>Create Supervisor</span>
+                            </button>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">Existing Supervisors</h3>
+                            <div id="supervisors-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Tab -->
+            <div id="categories-tab" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">Category Management</h2>
+                    <div class="grid">
+                        <div class="card">
+                            <h3 class="card-title">Create New Category</h3>
+                            <div class="form-group">
+                                <label for="category-name" class="form-label">Name</label>
+                                <input type="text" id="category-name" class="form-control"
+                                    placeholder="Enter category name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category-description" class="form-label">Description</label>
+                                <textarea id="category-description" class="form-control" rows="3"
+                                    placeholder="Enter category description" required></textarea>
+                            </div>
+                            <button id="create-category-btn" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                <span>Create Category</span>
+                            </button>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">Existing Categories</h3>
+                            <div id="categories-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assign Supervisors Tab -->
+            <div id="assign-tab" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">Assign Supervisors to Categories</h2>
+                    <div class="grid">
+                        <div class="card">
+                            <div class="form-group">
+                                <label for="assign-supervisor" class="form-label">Supervisor</label>
+                                <select id="assign-supervisor" class="form-control" required>
+                                    <option value="">Select Supervisor</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="assign-category" class="form-label">Category</label>
+                                <select id="assign-category" class="form-control" required>
+                                    <option value="">Select Category</option>
+                                </select>
+                            </div>
+                            <button id="assign-btn" class="btn btn-primary">
+                                <i class="fas fa-link"></i>
+                                <span>Assign Supervisor</span>
+                            </button>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">Current Assignments</h3>
+                            <div id="assignments-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let authToken = null;
+        let categories = [];
+        let supervisors = [];
+        let assignments = [];
+        let issues = [];
+
+        // DOM Elements
+        const authForms = document.getElementById('auth-forms');
+        const app = document.getElementById('app');
+        const issuesContainer = document.getElementById('issues-container');
+        const supervisorsContainer = document.getElementById('supervisors-container');
+        const categoriesContainer = document.getElementById('categories-container');
+        const assignmentsContainer = document.getElementById('assignments-container');
+        const userInfoDiv = document.getElementById('user-info');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const notification = document.getElementById('notification');
+
+        // Stats elements
+        const totalIssuesEl = document.getElementById('total-issues');
+        const resolvedIssuesEl = document.getElementById('resolved-issues');
+        const pendingIssuesEl = document.getElementById('pending-issues');
+        const supervisorsCountEl = document.getElementById('supervisors-count');
+
+        // Badge elements
+        const issuesBadgeEl = document.getElementById('issues-badge');
+        const supervisorsBadgeEl = document.getElementById('supervisors-badge');
+        const categoriesBadgeEl = document.getElementById('categories-badge');
+
+        // API Base URL - Update this if your API is at a different endpoint
+        const API_BASE = 'https://campusfixbackend.onrender.com/api';
+
+
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', init);
+
+        function init() {
+            // Check if user is already logged in
+            const savedToken = localStorage.getItem('authToken');
+            const savedUser = localStorage.getItem('user');
+
+            if (savedToken && savedUser) {
+                authToken = savedToken;
+                currentUser = JSON.parse(savedUser);
+                showApp();
+                loadInitialData();
+            }
+
+            // Set up event listeners
+            document.getElementById('login-btn').addEventListener('click', login);
+            document.getElementById('create-supervisor-btn').addEventListener('click', createSupervisor);
+            document.getElementById('create-category-btn').addEventListener('click', createCategory);
+            document.getElementById('assign-btn').addEventListener('click', assignSupervisor);
+
+            // Set up tab navigation
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Login function
+        async function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const loginBtn = document.getElementById('login-btn');
+            const originalText = loginBtn.innerHTML;
+
+            if (!username || !password) {
+                showNotification('Please enter both username and password', 'error');
+                return;
+            }
+
+            try {
+                loginBtn.innerHTML = '<div class="loading"></div>';
+                loginBtn.disabled = true;
+
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    authToken = data.token;
+                    currentUser = data.user;
+
+                    // Save to localStorage
+                    localStorage.setItem('authToken', authToken);
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+
+                    showApp();
+                    loadInitialData();
+                    showNotification('Login successful!');
+                } else {
+                    showNotification('Login failed: ' + (data.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showNotification('Login failed. Please try again.', 'error');
+            } finally {
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
+            }
+        }
+
+        // Show main application
+        function showApp() {
+            authForms.classList.add('hidden');
+            app.classList.remove('hidden');
+
+            // Update user info
+            userInfoDiv.innerHTML = `
+                <span>Welcome, ${currentUser.username} (Admin)</span>
+                <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+            `;
+        }
+
+        // Load initial data
+        async function loadInitialData() {
+            await loadCategories();
+            await loadSupervisors();
+            await loadIssues();
+            await loadAssignments();
+
+            // Populate dropdowns for assignment
+            populateAssignmentDropdowns();
+
+            // Update stats
+            updateStats();
+        }
+
+        // Logout function
+        function logout() {
+            authToken = null;
+            currentUser = null;
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            app.classList.add('hidden');
+            authForms.classList.remove('hidden');
+            showNotification('Logged out successfully');
+        }
+
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Update active tab
+            tabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Update active content
+            tabContents.forEach(content => {
+                if (content.id === `${tabName}-tab`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+
+            // Load data for the selected tab if needed
+            if (tabName === 'issues') {
+                loadIssues();
+            } else if (tabName === 'supervisors') {
+                loadSupervisors();
+            } else if (tabName === 'categories') {
+                loadCategories();
+            } else if (tabName === 'assign') {
+                loadAssignments();
+            }
+        }
+
+        // Update dashboard stats
+        function updateStats() {
+            // Update issue stats
+            totalIssuesEl.textContent = issues.length;
+            const resolvedIssues = issues.filter(issue => issue.status === 'completed').length;
+            const pendingIssues = issues.filter(issue => issue.status === 'pending').length;
+            resolvedIssuesEl.textContent = resolvedIssues;
+            pendingIssuesEl.textContent = pendingIssues;
+
+            // Update supervisor count
+            supervisorsCountEl.textContent = supervisors.length;
+
+            // Update tab badges
+            issuesBadgeEl.textContent = issues.length;
+            supervisorsBadgeEl.textContent = supervisors.length;
+            categoriesBadgeEl.textContent = categories.length;
+        }
+
+        // Load issues
+        async function loadIssues() {
+            try {
+                const response = await fetch(`${API_BASE}/issues`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    issues = await response.json();
+                    displayIssues(issues);
+                    updateStats();
+                } else {
+                    console.error('Failed to load issues');
+                    showNotification('Failed to load issues', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading issues:', error);
+                showNotification('Error loading issues', 'error');
+            }
+        }
+
+        // Display issues
+        // Display issues
+        function displayIssues(issues) {
+            issuesContainer.innerHTML = '';
+
+            if (issues.length === 0) {
+                issuesContainer.innerHTML = '<p class="text-center text-muted">No issues reported yet.</p>';
+                return;
+            }
+
+            issues.forEach(issue => {
+                const issueCard = document.createElement('div');
+                issueCard.className = 'issue-card';
+
+                const statusClass = `badge-${issue.status}`;
+
+                // ADD: Image HTML if issue has an image
+                const imageHtml = issue.image_url ? `
+            <div class="issue-image" style="margin: 12px 0;">
+                <img src="${issue.image_url}" 
+                     alt="Issue image" 
+                     style="max-width: 100%; max-height: 200px; border-radius: var(--radius); border: 1px solid var(--gray-200); cursor: pointer;"
+                     onclick="openImageModal('${issue.image_url}')">
+                <small style="color: var(--gray-500); font-size: 0.75rem;">Click to enlarge</small>
+            </div>
+        ` : '';
+
+                issueCard.innerHTML = `
+            <div class="issue-header">
+                <div>
+                    <div class="issue-title">${issue.title}</div>
+                    <div class="issue-meta">
+                        <span><i class="fas fa-tag"></i> ${issue.category_name || 'N/A'}</span>
+                        <span><i class="fas fa-user"></i> ${issue.user_name}</span>
+                        <span><i class="fas fa-calendar"></i> ${new Date(issue.created_at).toLocaleDateString()}</span>
+                    </div>
+                </div>
+                <div class="badge ${statusClass}">${issue.status}</div>
+            </div>
+            <div style="margin: 12px 0; color: var(--gray-600);">
+                ${issue.description}
+            </div>
+            
+            ${imageHtml} <!-- ADD THIS LINE -->
+            
+            <div class="issue-actions">
+                <button class="action-btn">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span>${issue.upvotes || 0}</span>
+                </button>
+                <button class="action-btn">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span>${issue.downvotes || 0}</span>
+                </button>
+                <button class="action-btn primary">
+                    <i class="fas fa-comment"></i>
+                    <span>Comment</span>
+                </button>
+            </div>
+        `;
+
+                issuesContainer.appendChild(issueCard);
+            });
+        }
+
+        // Load supervisors
+        async function loadSupervisors() {
+            try {
+                console.log('Loading supervisors with credits...');
+
+                if (!authToken) {
+                    console.error('No authentication token found');
+                    alert('Please login first');
+                    window.location.href = '/login.html';
+                    return;
+                }
+
+                // Use the users endpoint to get all user data including credits
+                const response = await fetch(`${API_BASE}/users`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status, response.statusText);
+
+                if (response.status === 401) {
+                    console.error('Token expired or invalid');
+                    localStorage.removeItem('authToken');
+                    alert('Session expired. Please login again.');
+                    window.location.href = '/login.html';
+                    return;
+                }
+
+                if (response.status === 403) {
+                    console.error('Access forbidden - admin rights required');
+                    alert('You need admin privileges to access this page.');
+                    return;
+                }
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('HTTP error:', response.status, errorData);
+                    throw new Error(`Failed to load supervisors: ${response.status} ${response.statusText}`);
+                }
+
+                const allUsers = await response.json();
+                // Filter only supervisors
+                supervisors = allUsers.filter(user => user.role === 'supervisor');
+
+                console.log('Supervisors loaded with credits:', supervisors);
+                displaySupervisors(supervisors);
+                updateStats();
+
+            } catch (error) {
+                console.error('Error loading supervisors:', error);
+
+                if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                    alert('Network error. Please check if the server is running.');
+                } else {
+                    alert('Error loading supervisors: ' + error.message);
+                }
+            }
+        }
+
+        // Display supervisors
+        function displaySupervisors(supervisors) {
+            supervisorsContainer.innerHTML = '';
+
+            if (supervisors.length === 0) {
+                supervisorsContainer.innerHTML = '<p class="text-center text-muted">No supervisors created yet.</p>';
+                return;
+            }
+
+            const table = document.createElement('table');
+            table.className = 'table';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Credits</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${supervisors.map(supervisor => `
+                        <tr>
+                            <td>${supervisor.username}</td>
+                            <td>${supervisor.email}</td>
+                            <td>${supervisor.credits || 0}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="deleteSupervisor(${supervisor.id})">
+                                    <i class="fas fa-trash"></i>
+                                    <span>Delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+
+            supervisorsContainer.appendChild(table);
+        }
+
+        // Create new supervisor
+        async function createSupervisor() {
+            const username = document.getElementById('supervisor-username').value;
+            const email = document.getElementById('supervisor-email').value;
+            const password = document.getElementById('supervisor-password').value;
+
+            if (!username || !email || !password) {
+                showNotification('Please fill all fields', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ username, email, password, role: 'supervisor' })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification('Supervisor created successfully!');
+                    // Clear form
+                    document.getElementById('supervisor-username').value = '';
+                    document.getElementById('supervisor-email').value = '';
+                    document.getElementById('supervisor-password').value = '';
+                    // Reload supervisors
+                    loadSupervisors();
+                    // Update assignment dropdown
+                    populateAssignmentDropdowns();
+                } else {
+                    showNotification('Failed to create supervisor: ' + (data.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                console.error('Error creating supervisor:', error);
+                showNotification('Failed to create supervisor. Please try again.', 'error');
+            }
+        }
+
+        // Delete supervisor
+        async function deleteSupervisor(supervisorId) {
+            if (!confirm('Are you sure you want to delete this supervisor?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/users/${supervisorId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    showNotification('Supervisor deleted successfully!');
+                    loadSupervisors();
+                    populateAssignmentDropdowns();
+                } else {
+                    const data = await response.json();
+                    showNotification('Failed to delete supervisor: ' + (data.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting supervisor:', error);
+                showNotification('Failed to delete supervisor. Please try again.', 'error');
+            }
+        }
+
+        // Load categories
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_BASE}/categories`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    categories = await response.json();
+                    displayCategories(categories);
+                    updateStats();
+                } else {
+                    console.error('Failed to load categories');
+                    showNotification('Failed to load categories', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+                showNotification('Error loading categories', 'error');
+            }
+        }
+
+        // Display categories
+        function displayCategories(categories) {
+            categoriesContainer.innerHTML = '';
+
+            if (categories.length === 0) {
+                categoriesContainer.innerHTML = '<p class="text-center text-muted">No categories created yet.</p>';
+                return;
+            }
+
+            const table = document.createElement('table');
+            table.className = 'table';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${categories.map(category => `
+                        <tr>
+                            <td>${category.name}</td>
+                            <td>${category.description || 'N/A'}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="deleteCategory(${category.id})">
+                                    <i class="fas fa-trash"></i>
+                                    <span>Delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+
+            categoriesContainer.appendChild(table);
+        }
+
+        // Create new category
+        async function createCategory() {
+            const name = document.getElementById('category-name').value;
+            const description = document.getElementById('category-description').value;
+
+            if (!name) {
+                showNotification('Please enter a category name', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/categories`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ name, description })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification('Category created successfully!');
+                    // Clear form
+                    document.getElementById('category-name').value = '';
+                    document.getElementById('category-description').value = '';
+                    // Reload categories
+                    loadCategories();
+                    // Update assignment dropdown
+                    populateAssignmentDropdowns();
+                } else {
+                    showNotification('Failed to create category: ' + (data.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                console.error('Error creating category:', error);
+                showNotification('Failed to create category. Please try again.', 'error');
+            }
+        }
+
+        // Delete category
+        async function deleteCategory(categoryId) {
+            if (!confirm('Are you sure you want to delete this category?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/categories/${categoryId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    showNotification('Category deleted successfully!');
+                    loadCategories();
+                    populateAssignmentDropdowns();
+                } else {
+                    const data = await response.json();
+                    showNotification('Failed to delete category: ' + (data.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting category:', error);
+                showNotification('Failed to delete category. Please try again.', 'error');
+            }
+        }
+
+        // Load assignments
+        async function loadAssignments() {
+            try {
+                // Try multiple endpoints for assignments
+                let response;
+                let assignmentsData = [];
+
+                // First try the standard assignments endpoint
+                response = await fetch(`${API_BASE}/assignments`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    assignmentsData = await response.json();
+                } else {
+                    // If that fails, try to get assignments from supervisors with categories
+                    const supervisorsResponse = await fetch(`${API_BASE}/supervisors`, {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        }
+                    });
+
+                    if (supervisorsResponse.ok) {
+                        const supervisorsWithCategories = await supervisorsResponse.json();
+                        assignmentsData = supervisorsWithCategories
+                            .filter(supervisor => supervisor.category_id)
+                            .map(supervisor => ({
+                                id: supervisor.id,
+                                supervisor_id: supervisor.id,
+                                supervisor_name: supervisor.username,
+                                category_id: supervisor.category_id,
+                                category_name: supervisor.category_name
+                            }));
+                    }
+                }
+
+                assignments = assignmentsData;
+                displayAssignments(assignments);
+            } catch (error) {
+                console.error('Error loading assignments:', error);
+                showNotification('Error loading assignments', 'error');
+            }
+        }
+
+        // Display assignments
+        function displayAssignments(assignments) {
+            assignmentsContainer.innerHTML = '';
+
+            if (assignments.length === 0) {
+                assignmentsContainer.innerHTML = '<p class="text-center text-muted">No assignments created yet.</p>';
+                return;
+            }
+
+            const table = document.createElement('table');
+            table.className = 'table';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Supervisor</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${assignments.map(assignment => `
+                        <tr>
+                            <td>${assignment.supervisor_name || assignment.supervisor_id}</td>
+                            <td>${assignment.category_name || assignment.category_id}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="removeAssignment(${assignment.id})">
+                                    <i class="fas fa-unlink"></i>
+                                    <span>Remove</span>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+
+            assignmentsContainer.appendChild(table);
+        }
+
+        // Populate assignment dropdowns
+        function populateAssignmentDropdowns() {
+            const supervisorSelect = document.getElementById('assign-supervisor');
+            const categorySelect = document.getElementById('assign-category');
+
+            // Populate supervisors dropdown
+            supervisorSelect.innerHTML = '<option value="">Select Supervisor</option>';
+            supervisors.forEach(supervisor => {
+                const option = document.createElement('option');
+                option.value = supervisor.id;
+                option.textContent = supervisor.username;
+                supervisorSelect.appendChild(option);
+            });
+
+            // Populate categories dropdown
+            categorySelect.innerHTML = '<option value="">Select Category</option>';
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                categorySelect.appendChild(option);
+            });
+        }
+
+        // Assign supervisor to category
+        async function assignSupervisor() {
+            const supervisorId = document.getElementById('assign-supervisor').value;
+            const categoryId = document.getElementById('assign-category').value;
+
+            if (!supervisorId || !categoryId) {
+                showNotification('Please select both supervisor and category', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/assignments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        supervisor_id: parseInt(supervisorId),
+                        category_id: parseInt(categoryId)
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification('Supervisor assigned successfully!');
+                    // Clear the form
+                    document.getElementById('assign-supervisor').value = '';
+                    document.getElementById('assign-category').value = '';
+                    // Reload assignments
+                    await loadAssignments();
+                } else {
+                    showNotification('Failed to assign supervisor: ' + (data.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                console.error('Error assigning supervisor:', error);
+                showNotification('Failed to assign supervisor. Please try again.', 'error');
+            }
+        }
+
+        // Remove assignment
+        async function removeAssignment(assignmentId) {
+            if (!confirm('Are you sure you want to remove this assignment?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/assignments/${assignmentId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    showNotification('Assignment removed successfully!');
+                    await loadAssignments();
+                } else {
+                    const data = await response.json();
+                    showNotification('Failed to remove assignment: ' + (data.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                console.error('Error removing assignment:', error);
+                showNotification('Failed to remove assignment', 'error');
+            }
+        }
+
+        // Periodically check for credit updates
+        function startCreditsPolling() {
+            // Update credits every 15 seconds
+            setInterval(refreshAllCredits, 15000);
+        }
+
+        // Call this in showApp() function:
+        function showApp() {
+            authForms.classList.add('hidden');
+            app.classList.remove('hidden');
+
+            // Update user info
+            userInfoDiv.innerHTML = `
+                <span>Welcome, ${currentUser.username} (Admin)</span>
+                <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+            `;
+
+            // Start polling for credit updates
+            startCreditsPolling();
+        }
+
+        async function refreshAllCredits() {
+            try {
+                console.log('🔄 Refreshing all supervisors credits...');
+                await loadSupervisors(); // This will reload and re-display with updated credits
+            } catch (error) {
+                console.error('Error refreshing credits:', error);
+            }
+        }
+        // Add image modal function
+        function openImageModal(imageUrl) {
+            // Create modal overlay
+            const modalOverlay = document.createElement('div');
+            modalOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        cursor: pointer;
+    `;
+
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+        max-width: 90%;
+        max-height: 90%;
+        position: relative;
+        cursor: default;
+    `;
+
+            const modalImage = document.createElement('img');
+            modalImage.src = imageUrl;
+            modalImage.style.cssText = `
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-lg);
+    `;
+
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '<i class="fas fa-times"></i>';
+            closeButton.style.cssText = `
+        position: absolute;
+        top: -40px;
+        right: 0;
+        background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+    `;
+
+            closeButton.addEventListener('click', () => {
+                document.body.removeChild(modalOverlay);
+            });
+
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    document.body.removeChild(modalOverlay);
+                }
+            });
+
+            modalContent.appendChild(modalImage);
+            modalContent.appendChild(closeButton);
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+{
+  "name": "campusfix",
+  "version": "1.0.0",
+  "description": "CampusFix Node.js project for Azure deployment",
+  "main": "post.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node post.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1",
+    "mysql2": "^3.15.1",
+    "pg": "^8.16.3",
+    "multer": "^1.4.5-lts.1",
+    "@azure/storage-blob": "^12.17.0",
+    "resend": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raswanthmalai19/CampusFix.git"
+  },
+  "author": "Raswanth Malaisamy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raswanthmalai19/CampusFix/issues"
+  },
+  "homepage": "https://github.com/raswanthmalai19/CampusFix#readme"
+}

@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Issue Resolution - Supervisor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --danger-gradient: linear-gradient(135deg, #ff5858 0%, #f09819 100%);
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border-light: #e2e8f0;
+            --border-focus: #c7d2fe;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        #user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #user-info span {
+            font-weight: 500;
+        }
+
+        .auth-forms {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            margin: 2rem auto;
+            max-width: 480px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-forms:hover {
+            box-shadow: var(--shadow-xl);
+        }
+
+        .auth-forms h2 {
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.75rem;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background-color: var(--bg-secondary);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(199, 210, 254, 0.5);
+        }
+
+        /* Premium Button Styles */
+        button {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button.primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        button.success {
+            background: var(--success-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        button.success:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        button.warning {
+            background: var(--warning-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        button.warning:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        button.danger {
+            background: var(--danger-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        button.danger:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+        }
+
+        button.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Card Layouts */
+        .issues-list {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .issues-list:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .issue-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .issue-card:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Status Badges */
+        .issue-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 10px;
+            letter-spacing: 0.025em;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: var(--warning-gradient);
+            color: white;
+        }
+
+        .status-processing {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .status-completed {
+            background: var(--success-gradient);
+            color: white;
+        }
+
+        .status-rejected {
+            background: var(--danger-gradient);
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-light);
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            margin-right: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Credits Display */
+        .credits-display {
+            background: var(--primary-gradient);
+            padding: 1.5rem;
+            border-radius: var(--radius-xl);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .credits-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+            max-width: 400px;
+        }
+
+        .search-input {
+            padding-left: 44px;
+            border-radius: 50px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            z-index: 1;
+        }
+
+        /* Issue Metadata */
+        .issue-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 12px 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .issue-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .issue-meta-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        .issue-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .issue-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .issue-description {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .vote-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .vote-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border-light);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .vote-btn:hover {
+            background: white;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .vote-up {
+            color: #10b981;
+        }
+
+        .vote-down {
+            color: #ef4444;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+        }
+
+        .comment {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .comment:last-child {
+            margin-bottom: 0;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .comment-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .comment-text {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+
+            .tab {
+                padding: 10px 16px;
+            }
+
+            .issue-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            button {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+
+        /* Animation for page transitions */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-content.active {
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Loading state */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Add these styles to your existing CSS */
+
+        /* Issue Image Styles */
+        .issue-image {
+            margin: 12px 0;
+            text-align: center;
+        }
+
+        .issue-image img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .issue-image img:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-focus);
+        }
+
+        .issue-image small {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        /* Image Modal Styles */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .image-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            cursor: default;
+        }
+
+        .image-modal img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--danger-gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .image-modal-close:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Responsive image styles */
+        @media (max-width: 768px) {
+            .issue-image img {
+                max-height: 150px;
+            }
+
+            .image-modal-content {
+                max-width: 95%;
+            }
+
+            .image-modal-close {
+                top: -45px;
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* Add some animation for modal */
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .image-modal-content {
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        /* Enhanced issue card with images */
+        .issue-card.has-image {
+            border-left: 4px solid #667eea;
+        }
+
+        .issue-card.has-image:hover {
+            border-left-color: #764ba2;
+        }
+
+        /* Image loading state */
+        .issue-image.loading {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+        }
+
+        .issue-image.loading::after {
+            content: "Loading image...";
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Image error state */
+        .issue-image.error {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .issue-image.error::before {
+            content: "📷";
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Campus Issue Resolution System - Supervisor Portal</h1>
+        <div id="user-info"></div>
+    </header>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div id="auth-forms" class="auth-forms">
+            <h2>Supervisor Login</h2>
+            <div class="form-group">
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" required>
+            </div>
+            <button id="login-btn" class="primary">Login</button>
+        </div>
+
+        <!-- Main Application (hidden until logged in) -->
+        <div id="app" class="hidden">
+            <!-- Credits Display -->
+            <div class="credits-display">
+                Your Credits: <span id="credits-amount">0</span>
+            </div>
+
+            <!-- Tabs for different views -->
+            <div class="tabs">
+                <div class="tab active" data-tab="available">Available Issues</div>
+                <div class="tab" data-tab="my-issues">My Assigned Issues</div>
+                <div class="tab" data-tab="completed">Completed Issues</div>
+            </div>
+
+            <!-- Available Issues Tab -->
+            <div id="available-tab" class="tab-content active">
+                <h2>Available Issues in My Categories</h2>
+                <div id="available-issues-container"></div>
+            </div>
+
+            <!-- My Issues Tab -->
+            <div id="my-issues-tab" class="tab-content">
+                <h2>My Assigned Issues</h2>
+                <div id="my-issues-container"></div>
+            </div>
+
+            <!-- Completed Issues Tab -->
+            <div id="completed-tab" class="tab-content">
+                <h2>Completed Issues</h2>
+                <div id="completed-issues-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let authToken = null;
+        let myCategories = [];
+        let availableIssues = [];
+        let myIssues = [];
+        let completedIssues = [];
+
+        // DOM Elements
+        const authForms = document.getElementById('auth-forms');
+        const app = document.getElementById('app');
+        const availableIssuesContainer = document.getElementById('available-issues-container');
+        const myIssuesContainer = document.getElementById('my-issues-container');
+        const completedIssuesContainer = document.getElementById('completed-issues-container');
+        const userInfoDiv = document.getElementById('user-info');
+        const creditsAmountSpan = document.getElementById('credits-amount');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        // API Base URL
+        const API_BASE = 'https://campusfixbackend.onrender.com/api';
+
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Initialize application with better error handling
+        function init() {
+            // Check if user is already logged in
+            const savedToken = localStorage.getItem('authToken');
+            const savedUser = localStorage.getItem('user');
+
+            if (savedToken && savedUser) {
+                try {
+                    authToken = savedToken;
+                    currentUser = JSON.parse(savedUser);
+
+                    // Verify the user is actually a supervisor
+                    if (currentUser.role === 'supervisor' || currentUser.role === 'admin') {
+                        showApp();
+                        loadInitialData();
+                    } else {
+                        // Clear invalid supervisor session
+                        logout();
+                        alert('This panel is for supervisors only');
+                    }
+                } catch (error) {
+                    console.error('Error parsing saved user:', error);
+                    logout();
+                }
+            }
+
+            // Set up event listeners
+            document.getElementById('login-btn').addEventListener('click', login);
+
+            // Set up tab navigation
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+        }
+
+        // Login function
+        // Login function with role checking
+        async function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Check if user is a supervisor or admin
+                    if (data.user.role !== 'supervisor' && data.user.role !== 'admin') {
+                        alert('Access denied. This panel is for supervisors only.');
+                        return;
+                    }
+
+                    authToken = data.token;
+                    currentUser = data.user;
+
+                    // Save to localStorage
+                    localStorage.setItem('authToken', authToken);
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+
+                    showApp();
+                    loadInitialData();
+                } else {
+                    alert('Login failed: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed. Please try again.');
+            }
+        }
+
+        // Show main application
+        function showApp() {
+            authForms.classList.add('hidden');
+            app.classList.remove('hidden');
+
+            // Update user info
+            userInfoDiv.innerHTML = `
+                <span>Welcome, ${currentUser.username} (Supervisor)</span>
+                <button class="secondary" onclick="logout()">Logout</button>
+            `;
+
+            // Update credits
+            creditsAmountSpan.textContent = currentUser.credits || 0;
+        }
+
+        // Load initial data
+        async function loadInitialData() {
+            await loadMyCategories();
+            await loadAvailableIssues();
+            await loadMyIssues();
+            await loadCompletedIssues();
+        }
+
+        // Logout function
+        function logout() {
+            authToken = null;
+            currentUser = null;
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            app.classList.add('hidden');
+            authForms.classList.remove('hidden');
+        }
+
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Update active tab
+            tabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Update active content
+            tabContents.forEach(content => {
+                if (content.id === `${tabName}-tab`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+
+            // Load data for the selected tab if needed
+            if (tabName === 'available') {
+                loadAvailableIssues();
+            } else if (tabName === 'my-issues') {
+                loadMyIssues();
+            } else if (tabName === 'completed') {
+                loadCompletedIssues();
+            }
+        }
+
+        // Load categories assigned to the supervisor
+        async function loadMyCategories() {
+            try {
+                const response = await fetch(`${API_BASE}/supervisor/categories`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    myCategories = await response.json();
+                    console.log('My assigned categories:', myCategories);
+                } else {
+                    console.error('Failed to load assigned categories');
+                    myCategories = [];
+                }
+            } catch (error) {
+                console.error('Error loading assigned categories:', error);
+                myCategories = [];
+            }
+        }
+
+        // Load available issues in supervisor's categories
+        async function loadAvailableIssues() {
+            try {
+                // First ensure we have the latest categories
+                await loadMyCategories();
+
+                const response = await fetch(`${API_BASE}/issues`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const allIssues = await response.json();
+
+                    // Get only the category IDs for easier filtering
+                    const myCategoryIds = myCategories.map(cat => cat.id);
+
+                    // Filter issues that are in supervisor's categories and are pending
+                    availableIssues = allIssues.filter(issue =>
+                        myCategoryIds.includes(issue.category_id) &&
+                        issue.status === 'pending'
+                    );
+
+                    console.log('Available issues:', availableIssues);
+                    displayAvailableIssues(availableIssues);
+                } else {
+                    console.error('Failed to load issues');
+                    availableIssues = [];
+                    displayAvailableIssues([]);
+                }
+            } catch (error) {
+                console.error('Error loading issues:', error);
+                availableIssues = [];
+                displayAvailableIssues([]);
+            }
+        }
+
+        // Display available issues
+        // Display available issues
+        function displayAvailableIssues(issues) {
+            availableIssuesContainer.innerHTML = '';
+
+            if (issues.length === 0) {
+                availableIssuesContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📋</div>
+                <h3>No available issues in your categories</h3>
+                <p>Issues assigned to your categories will appear here</p>
+            </div>
+        `;
+                return;
+            }
+
+            issues.forEach(issue => {
+                const issueElement = document.createElement('div');
+                issueElement.className = 'issue-card';
+
+                const statusClass = `status-${issue.status}`;
+
+                // ADD: Image HTML if issue has an image
+                const imageHtml = issue.image_url ? `
+            <div class="issue-image" style="margin: 12px 0;">
+                <img src="${issue.image_url}" 
+                     alt="Issue image" 
+                     style="max-width: 100%; max-height: 200px; border-radius: var(--radius-md); border: 1px solid var(--border-light); cursor: pointer;"
+                     onclick="openImageModal('${issue.image_url}')">
+                <small style="color: var(--text-muted); font-size: 0.75rem;">Click to enlarge</small>
+            </div>
+        ` : '';
+
+                issueElement.innerHTML = `
+            <div class="issue-title">
+                <span class="issue-status ${statusClass}">${issue.status}</span>
+                ${issue.title}
+            </div>
+            <div class="issue-meta">
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                    <span>${issue.category_name}</span>
+                </div>
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    <span>${issue.user_name}</span>
+                </div>
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>${new Date(issue.created_at).toLocaleDateString()}</span>
+                </div>
+            </div>
+            <div class="issue-description">${issue.description}</div>
+            
+            ${imageHtml} <!-- ADD THIS LINE -->
+            
+            <div class="vote-buttons">
+                <div class="vote-btn vote-up">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+                    </svg>
+                    <span>${issue.upvotes}</span>
+                </div>
+                <div class="vote-btn vote-down">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 0-.5.5v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5A.5.5 0 0 0 8 4z"/>
+                    </svg>
+                    <span>${issue.downvotes}</span>
+                </div>
+            </div>
+            <div class="issue-actions">
+                <button class="success" onclick="acceptIssue(${issue.id})">Accept Issue</button>
+            </div>
+        `;
+
+                availableIssuesContainer.appendChild(issueElement);
+            });
+        }
+
+        // Accept an issue
+        async function acceptIssue(issueId) {
+            try {
+                const response = await fetch(`${API_BASE}/issues/${issueId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ status: 'processing' })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Issue accepted successfully!');
+                    // Reload issues
+                    loadAvailableIssues();
+                    loadMyIssues();
+                } else {
+                    alert('Failed to accept issue: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error accepting issue:', error);
+                alert('Failed to accept issue. Please try again.');
+            }
+        }
+
+        // Load issues assigned to the current supervisor
+        async function loadMyIssues() {
+            try {
+                const response = await fetch(`${API_BASE}/issues`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const allIssues = await response.json();
+
+                    // Filter issues assigned to current supervisor with status 'processing'
+                    myIssues = allIssues.filter(issue =>
+                        issue.supervisor_id === currentUser.id &&
+                        issue.status === 'processing'
+                    );
+
+                    console.log('My assigned issues:', myIssues);
+                    displayMyIssues(myIssues);
+                } else {
+                    console.error('Failed to load issues');
+                    myIssues = [];
+                    displayMyIssues([]);
+                }
+            } catch (error) {
+                console.error('Error loading issues:', error);
+                myIssues = [];
+                displayMyIssues([]);
+            }
+        }
+
+        // Display my issues
+        // Display my issues
+        function displayMyIssues(issues) {
+            myIssuesContainer.innerHTML = '';
+
+            if (issues.length === 0) {
+                myIssuesContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📝</div>
+                <h3>You have no assigned issues</h3>
+                <p>Issues you accept will appear here</p>
+            </div>
+        `;
+                return;
+            }
+
+            issues.forEach(issue => {
+                const issueElement = document.createElement('div');
+                issueElement.className = 'issue-card';
+
+                const statusClass = `status-${issue.status}`;
+
+                // ADD: Image HTML if issue has an image
+                const imageHtml = issue.image_url ? `
+            <div class="issue-image" style="margin: 12px 0;">
+                <img src="${issue.image_url}" 
+                     alt="Issue image" 
+                     style="max-width: 100%; max-height: 200px; border-radius: var(--radius-md); border: 1px solid var(--border-light); cursor: pointer;"
+                     onclick="openImageModal('${issue.image_url}')">
+                <small style="color: var(--text-muted); font-size: 0.75rem;">Click to enlarge</small>
+            </div>
+        ` : '';
+
+                issueElement.innerHTML = `
+            <div class="issue-title">
+                <span class="issue-status ${statusClass}">${issue.status}</span>
+                ${issue.title}
+            </div>
+            <div class="issue-meta">
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                    <span>${issue.category_name}</span>
+                </div>
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    <span>${issue.user_name}</span>
+                </div>
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>${new Date(issue.created_at).toLocaleDateString()}</span>
+                </div>
+            </div>
+            <div class="issue-description">${issue.description}</div>
+            
+            ${imageHtml} <!-- ADD THIS LINE -->
+            
+            <div class="vote-buttons">
+                <div class="vote-btn vote-up">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+                    </svg>
+                    <span>${issue.upvotes}</span>
+                </div>
+                <div class="vote-btn vote-down">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 0-.5.5v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5A.5.5 0 0 0 8 4z"/>
+                    </svg>
+                    <span>${issue.downvotes}</span>
+                </div>
+            </div>
+            <div class="issue-actions">
+                <button class="success" onclick="updateIssueStatus(${issue.id}, 'completed')">Mark as Completed</button>
+                <button class="danger" onclick="updateIssueStatus(${issue.id}, 'rejected')">Reject Issue</button>
+                <button class="secondary" onclick="viewComments(${issue.id})">Comments</button>
+            </div>
+            <div id="comments-${issue.id}" class="hidden">
+                <div class="comments-section">
+                    <h4>Comments</h4>
+                    <div id="comments-list-${issue.id}"></div>
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <textarea id="comment-text-${issue.id}" rows="2" placeholder="Add a comment"></textarea>
+                        <button class="primary" onclick="addComment(${issue.id})" style="margin-top: 0.5rem;">Post Comment</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+                myIssuesContainer.appendChild(issueElement);
+            });
+        }
+
+        // Update issue status
+        async function updateIssueStatus(issueId, status) {
+            try {
+                console.log(`🔄 Updating issue ${issueId} status to: ${status}`);
+
+                const response = await fetch(`${API_BASE}/issues/${issueId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ status })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(`Issue status updated to ${status} successfully!`);
+
+                    // Reload all issue lists
+                    await Promise.all([
+                        loadAvailableIssues(),
+                        loadMyIssues(),
+                        loadCompletedIssues()
+                    ]);
+
+                    // ✅ CRITICAL: Update credits when issue is completed
+                    if (status === 'completed') {
+                        console.log('💰 Issue completed - updating credits display');
+                        // Small delay to ensure backend processing
+                        setTimeout(updateCreditsDisplay, 500);
+                    }
+                } else {
+                    alert('Failed to update issue status: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error updating issue status:', error);
+                alert('Failed to update issue status. Please try again.');
+            }
+        }
+        async function updateCreditsDisplay() {
+            try {
+                const response = await fetch(`${API_BASE}/users/me`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    creditsAmountSpan.textContent = userData.credits || 0;
+                    // Also update currentUser object
+                    currentUser.credits = userData.credits;
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                }
+            } catch (error) {
+                console.error('Error updating credits display:', error);
+            }
+        }
+
+        // Load completed issues
+        async function loadCompletedIssues() {
+            try {
+                const response = await fetch(`${API_BASE}/issues`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const allIssues = await response.json();
+
+                    // Filter issues that are completed by the current supervisor
+                    completedIssues = allIssues.filter(issue =>
+                        issue.status === 'completed' &&
+                        issue.supervisor_id === currentUser.id
+                    );
+
+                    console.log('Completed issues:', completedIssues);
+                    displayCompletedIssues(completedIssues);
+                } else {
+                    console.error('Failed to load issues');
+                    completedIssues = [];
+                    displayCompletedIssues([]);
+                }
+            } catch (error) {
+                console.error('Error loading issues:', error);
+                completedIssues = [];
+                displayCompletedIssues([]);
+            }
+        }
+
+        // Display completed issues
+        // Display completed issues
+        function displayCompletedIssues(issues) {
+            completedIssuesContainer.innerHTML = '';
+
+            if (issues.length === 0) {
+                completedIssuesContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">✅</div>
+                <h3>No completed issues yet</h3>
+                <p>Issues you mark as completed will appear here</p>
+            </div>
+        `;
+                return;
+            }
+
+            issues.forEach(issue => {
+                const issueElement = document.createElement('div');
+                issueElement.className = 'issue-card';
+
+                const statusClass = `status-${issue.status}`;
+
+                // ADD: Image HTML if issue has an image
+                const imageHtml = issue.image_url ? `
+            <div class="issue-image" style="margin: 12px 0;">
+                <img src="${issue.image_url}" 
+                     alt="Issue image" 
+                     style="max-width: 100%; max-height: 200px; border-radius: var(--radius-md); border: 1px solid var(--border-light); cursor: pointer;"
+                     onclick="openImageModal('${issue.image_url}')">
+                <small style="color: var(--text-muted); font-size: 0.75rem;">Click to enlarge</small>
+            </div>
+        ` : '';
+
+                issueElement.innerHTML = `
+            <div class="issue-title">
+                <span class="issue-status ${statusClass}">${issue.status}</span>
+                ${issue.title}
+            </div>
+            <div class="issue-meta">
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                    <span>${issue.category_name}</span>
+                </div>
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    <span>${issue.user_name}</span>
+                </div>
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>${new Date(issue.created_at).toLocaleDateString()}</span>
+                </div>
+            </div>
+            <div class="issue-description">${issue.description}</div>
+            
+            ${imageHtml} <!-- ADD THIS LINE -->
+            
+            <div class="vote-buttons">
+                <div class="vote-btn vote-up">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+                    </svg>
+                    <span>${issue.upvotes}</span>
+                </div>
+                <div class="vote-btn vote-down">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 0-.5.5v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5A.5.5 0 0 0 8 4z"/>
+                    </svg>
+                    <span>${issue.downvotes}</span>
+                </div>
+            </div>
+            <div class="issue-meta" style="margin-top: 1rem;">
+                <div class="issue-meta-item">
+                    <svg class="issue-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    <span>Resolved by: Supervisor ${issue.supervisor_id}</span>
+                </div>
+            </div>
+        `;
+
+                completedIssuesContainer.appendChild(issueElement);
+            });
+        }
+
+        // View comments for an issue
+        async function viewComments(issueId) {
+            const commentsDiv = document.getElementById(`comments-${issueId}`);
+            const commentsListDiv = document.getElementById(`comments-list-${issueId}`);
+
+            // Toggle visibility
+            if (commentsDiv.classList.contains('hidden')) {
+                try {
+                    const response = await fetch(`${API_BASE}/issues/${issueId}/comments`, {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const comments = await response.json();
+
+                        commentsListDiv.innerHTML = '';
+                        if (comments.length === 0) {
+                            commentsListDiv.innerHTML = '<p>No comments yet.</p>';
+                        } else {
+                            comments.forEach(comment => {
+                                const commentElement = document.createElement('div');
+                                commentElement.className = 'comment';
+                                commentElement.innerHTML = `
+                                    <div class="comment-header">
+                                        <span class="comment-author">${comment.username}</span>
+                                        <span class="comment-date">${new Date(comment.created_at).toLocaleDateString()}</span>
+                                    </div>
+                                    <div class="comment-text">${comment.comment}</div>
+                                `;
+                                commentsListDiv.appendChild(commentElement);
+                            });
+                        }
+
+                        commentsDiv.classList.remove('hidden');
+                    } else {
+                        console.error('Failed to load comments');
+                    }
+                } catch (error) {
+                    console.error('Error loading comments:', error);
+                }
+            } else {
+                commentsDiv.classList.add('hidden');
+            }
+        }
+
+        // Add comment to issue
+        async function addComment(issueId) {
+            const commentText = document.getElementById(`comment-text-${issueId}`).value;
+
+            if (!commentText.trim()) {
+                alert('Please enter a comment');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/issues/${issueId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ comment: commentText })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Clear comment textarea
+                    document.getElementById(`comment-text-${issueId}`).value = '';
+                    // Reload comments
+                    viewComments(issueId);
+                } else {
+                    alert('Failed to add comment: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error adding comment:', error);
+                alert('Failed to add comment. Please try again.');
+            }
+        }
+        // Add image modal function
+        //     function openImageModal(imageUrl) {
+        //         // Create modal overlay
+        //         const modalOverlay = document.createElement('div');
+        //         modalOverlay.style.cssText = `
+        //     position: fixed;
+        //     top: 0;
+        //     left: 0;
+        //     width: 100%;
+        //     height: 100%;
+        //     background: rgba(0, 0, 0, 0.8);
+        //     display: flex;
+        //     align-items: center;
+        //     justify-content: center;
+        //     z-index: 1000;
+        //     cursor: pointer;
+        // `;
+
+        //         // Create modal content
+        //         const modalContent = document.createElement('div');
+        //         modalContent.style.cssText = `
+        //     max-width: 90%;
+        //     max-height: 90%;
+        //     position: relative;
+        //     cursor: default;
+        // `;
+
+        //         const modalImage = document.createElement('img');
+        //         modalImage.src = imageUrl;
+        //         modalImage.style.cssText = `
+        //     max-width: 100%;
+        //     max-height: 100%;
+        //     border-radius: var(--radius-md);
+        //     box-shadow: var(--shadow-xl);
+        // `;
+
+        //         const closeButton = document.createElement('button');
+        //         closeButton.innerHTML = '<i class="fas fa-times"></i>';
+        //         closeButton.style.cssText = `
+        //     position: absolute;
+        //     top: -40px;
+        //     right: 0;
+        //     background: var(--danger-gradient);
+        //     color: white;
+        //     border: none;
+        //     border-radius: 50%;
+        //     width: 32px;
+        //     height: 32px;
+        //     cursor: pointer;
+        //     display: flex;
+        //     align-items: center;
+        //     justify-content: center;
+        //     font-size: 0.875rem;
+        // `;
+
+        //         closeButton.addEventListener('click', () => {
+        //             document.body.removeChild(modalOverlay);
+        //         });
+
+        //         modalOverlay.addEventListener('click', (e) => {
+        //             if (e.target === modalOverlay) {
+        //                 document.body.removeChild(modalOverlay);
+        //             }
+        //         });
+
+        //         modalContent.appendChild(modalImage);
+        //         modalContent.appendChild(closeButton);
+        //         modalOverlay.appendChild(modalContent);
+        //         document.body.appendChild(modalOverlay);
+        //     }
+        // Update the openImageModal function to use CSS classes
+        function openImageModal(imageUrl) {
+            // Create modal overlay
+            const modalOverlay = document.createElement('div');
+            modalOverlay.className = 'image-modal';
+
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.className = 'image-modal-content';
+
+            const modalImage = document.createElement('img');
+            modalImage.src = imageUrl;
+            modalImage.alt = 'Issue image preview';
+
+            const closeButton = document.createElement('button');
+            closeButton.className = 'image-modal-close';
+            closeButton.innerHTML = '✕';
+            closeButton.setAttribute('aria-label', 'Close image modal');
+
+            closeButton.addEventListener('click', () => {
+                document.body.removeChild(modalOverlay);
+            });
+
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    document.body.removeChild(modalOverlay);
+                }
+            });
+
+            // Add keyboard support
+            const handleKeydown = (e) => {
+                if (e.key === 'Escape') {
+                    document.body.removeChild(modalOverlay);
+                    document.removeEventListener('keydown', handleKeydown);
+                }
+            };
+
+            document.addEventListener('keydown', handleKeydown);
+
+            modalContent.appendChild(modalImage);
+            modalContent.appendChild(closeButton);
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+
+            // Focus the close button for accessibility
+            closeButton.focus();
+        }
+    </script>
+</body>
+
+</html>
